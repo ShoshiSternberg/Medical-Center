@@ -2,42 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { getUserByEmailAddress, userLogin } from '../../../clientServices/UserService';
+import { getUserByEmailAddress } from '../../../clientServices/UserService';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import emailjs from 'emailjs-com';
-import { getRoleById } from '../../../clientServices/RoleService';
+// import { getRoleById } from '../../../clientServices/RoleService';
+import './errorMessage.css';
 
 function MyVerticallyCenteredModal(props) {
     const navigate = useNavigate();
 
-    emailjs.init('OGeC5v16OEXHrsSlr');
+    const [email, setEmail] = useState();
 
-    const [user, setUser] = useState({
-        Password: '',
-        Email: '',
-    });
+    const [error, setError] = useState('');
 
-    const handleUserLogin = async () => {
-        try {
-            var userData = await userLogin(user);
-            if (userData) {
-                sessionStorage.setItem('email', userData.Email);
-                if (userData.RoleID === 1)
-                    navigate('/admin', { state: 1 });
-                else {
-                    if (userData.RoleID === 2)
-                        navigate('/rooms');
-                    else
-                        navigate('/admin', { state: 0 });
-                }
-            }
-            else
-                alert("error");
-        } catch (error) {
-            console.error('Error login user:', error);
-            alert("error");
-        }
-    };
+    useEffect(() => {
+        emailjs.init('OGeC5v16OEXHrsSlr');
+    }, []);
 
     const generateRandomPassword = () => {
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_-+={}[]|;:<>,.?/';
@@ -48,28 +28,31 @@ function MyVerticallyCenteredModal(props) {
         return password;
     }
 
-
     const handleForgotPassword = async (e) => {
 
-        if (!user.Email) {
-            alert("Email address required");
+        if (!email) {
+            setError("חובה להכניס כתובת מייל")
+            // alert("Email address required");
         }
         else {
-            var isExist = await getUserByEmailAddress(user.Email);
-            if (!isExist) {
-                alert("Email not exist");
+            var user = await getUserByEmailAddress(email);
+            user = user.data;
+            if (!user) {
+                setError("כתובת המייל לא נמצאת, אנא הכנס כתובת מייל");
+                // alert("Email not exist");
             }
             else {
                 e.preventDefault();
 
                 var generatedPassword;
 
-                var role = await getRoleById(user.RoleID);
+                // var role = await getRoleById(user.RoleID);
                 sessionStorage.setItem('email', user.Email);
-                sessionStorage.setItem('role', role.Role);
+                // sessionStorage.setItem('role', role.Role);
 
                 generatedPassword = generateRandomPassword();
                 const templateParams = {
+                    to_name: user.Name,
                     to_email: user.Email,
                     message: generatedPassword,
                 };
@@ -81,7 +64,7 @@ function MyVerticallyCenteredModal(props) {
                 )
                     .then((response) => {
                         console.log('SUCCESS!', response.status, response.text);
-                        props.onHide();
+                        // props.onHide();
                         navigate('/checkPassword', { state: generatedPassword });
                     })
                     .catch((error) => {
@@ -99,33 +82,28 @@ function MyVerticallyCenteredModal(props) {
             centered
         >
             <Modal.Body>
-                <h4>כניסת משתמש</h4>
+                <h4>הכנס כתובת מייל</h4>
                 <form>
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        value={user.Password}
-                        onChange={(e) => setUser({ ...user, Password: e.target.value })}
-                    />
                     <input
                         type="email"
                         placeholder="Email"
-                        value={user.Email}
-                        onChange={(e) => setUser({ ...user, Email: e.target.value })}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                 </form>
             </Modal.Body>
+            <span className='errorMessage' dir='rtl'>כעת תקבל למייל סיסמא זמנית. הסיסמא תקפה למשך 5 דקות</span>
+            <span className='errorMessage' dir='rtl'>{error}</span>
             <Modal.Footer>
-                <Button onClick={() => navigate('/')}>סגירה</Button>
-                <Button onClick={handleForgotPassword}>שכחתי סיסמא</Button>
-                <Button onClick={handleUserLogin}>כניסה</Button>
+                <Button onClick={() => navigate('/pagesNavigate')}>סגירה</Button>
+                <Button onClick={handleForgotPassword}>שלח סיסמא זמנית</Button>
             </Modal.Footer>
         </Modal>
     );
 }
 
 
-const UserLogin = () => {
+const ForgotPassword = () => {
 
     return (
         <div>
@@ -136,4 +114,4 @@ const UserLogin = () => {
     );
 };
 
-export default UserLogin;
+export default ForgotPassword;

@@ -1,4 +1,4 @@
-import React, {useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
 import VaccinesIcon from '@mui/icons-material/Vaccines';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -9,6 +9,7 @@ import './DoctorPage.css';
 import { getAllRooms, getRoomById } from '../../clientServices/RoomService.js';
 import EmergencyDoctorAlertModal from '../QueuesManagment/modals/EmergencyDoctorAlert.jsx';
 import DeletePatientModal from '../QueuesManagment/modals/DeletePatient.jsx';
+import Role from '../sidebar/role.jsx';
 
 const DoctorPage = () => {
     const { id } = useParams();
@@ -191,6 +192,9 @@ const DoctorPage = () => {
                 roomName={id ? roomData.Name : ''}
             />
             {alertComponent} {/* This renders the custom alert */}
+            <div className='roleContainer'>
+                <Role />
+            </div>
         </div>
     );
 };

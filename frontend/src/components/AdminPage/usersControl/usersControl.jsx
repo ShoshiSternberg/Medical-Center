@@ -6,6 +6,7 @@ import { getUsers, createUser, getUserByEmailAddress } from '../../../clientServ
 import { getRoles } from '../../../clientServices/RoleService';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
+import Role from '../../sidebar/role';
 
 
 
@@ -34,7 +35,7 @@ function MyVerticallyCenteredModal(props) {
 
     useEffect(() => {
         if (!sessionStorage.getItem('email')) {
-            navigate('/');
+            navigate('/pagesNavigate');
         }
         else {
             fetchRoles();
@@ -262,6 +263,9 @@ const UsersControl = () => {
             <div>
                 <h2>משתמשים</h2>
                 <UsersTable />
+            </div>
+            <div className='roleContainer'>
+                <Role />
             </div>
         </div>
     );

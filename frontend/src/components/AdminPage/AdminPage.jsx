@@ -2,6 +2,9 @@ import React, { useEffect } from 'react';
 import SidebarMenu from '../sidebar/sidebar'
 import './AdminPage.css'
 import { useLocation, useNavigate } from 'react-router-dom';
+import Role from '../sidebar/role';
+import '../HomePage/pagesNavigate/pagesNavigate.css';
+
 const AdminPage = () => {
 
     const location = useLocation();
@@ -11,7 +14,7 @@ const AdminPage = () => {
 
     useEffect(() => {
         if (!sessionStorage.getItem('email')) {
-            navigate('/');
+            navigate('/pagesNavigate');
         }
     }, []);
 
@@ -23,6 +26,9 @@ const AdminPage = () => {
                 <div>
                     <div>עדכון אחרון</div>
                     <div>15-02-2024 14:32</div>
+                </div>
+                <div className='roleContainer'>
+                    <Role />
                 </div>
             </div>
         </>

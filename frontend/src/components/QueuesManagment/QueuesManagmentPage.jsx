@@ -18,6 +18,7 @@ import AddRoomModal from './modals/AddNewRoom';
 import DeleteRoomModal from './modals/DeleteRoom';
 import { deleteRoom } from '../../clientServices/RoomService';
 import useReceptionSocket from '../../clientServices/ReceptionSocket';
+import Role from '../sidebar/role';
 
 const QueueManagmentPage = () => {
     const [selectedPatient, setSelectedPatient] = useState(null);
@@ -316,6 +317,9 @@ const QueueManagmentPage = () => {
                 open={isAddRoomModalOpen}
                 handleClose={handleCloseAddRoomModal}
             />
+            <div className='roleContainer'>
+                <Role />
+            </div>
         </>
     );
 };

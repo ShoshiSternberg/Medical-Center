@@ -9,7 +9,7 @@
 
 .page-btn {
     margin: 20px;
-    background-image: linear-gradient(to right, #4ca0f9 0%, #3762f0  51%, #368cdc  100%);
+    background-image: linear-gradient(to right, #4ca0f9 0%, #3762f0 51%, #368cdc 100%);
     text-align: center;
     text-transform: uppercase;
     transition: 0.5s;
@@ -19,8 +19,8 @@
     padding: 10px;
     border-radius: 10px;
     text-align: center;
-    border:none;
-    width:20%;
+    border: none;
+    width: 30%;
     font-weight: 500;
     font-size: 10pt;
     color: #ffffff;
@@ -30,4 +30,16 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center
+}
+
+/* role style */
+.roleContainer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    margin: 20px;
+}
+
+.role {
+    width: 100px;
 }

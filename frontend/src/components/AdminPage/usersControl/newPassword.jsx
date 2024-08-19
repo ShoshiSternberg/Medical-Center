@@ -42,14 +42,14 @@ function MyVerticallyCenteredModal(props) {
             var user = await getUserByEmailAddress(email);
             var updatedUser = {
                 Name: user.data.Name,
-                RoleID: user.data.roleID,
+                RoleID: user.data.RoleID,
                 Password: password.NewPassword,
                 Email: user.data.Email,
                 Phone: user.data.Phone,
-                Status: user.data.Status
+                Status: user.data.Status === true? 1: 0
             };
             await updateUser(user.data.ID, updatedUser);
-            navigate('/admin');
+            navigate('/userLogin');
             props.onHide();
         } catch (error) {
             console.error('Error creating user:', error);

@@ -62,15 +62,18 @@ exports.userLogin = async (emailAddress, password) => {
     }
 }
 
-exports.updateUser = async (id, userData, flag) => {
+exports.updateUser = async (id, userData) => {
     // update password
-    if (flag == true) {
+    var oldUser = await this.findUserById(id);
+    console.log(oldUser.Name);
+    if (oldUser.Password !== userData.Password) {
         const salt = await bcrypt.genSalt(10);
 
         const hashPassword = await new Promise((resolve, reject) => {
             bcrypt.hash(userData.Password, salt, function (err, hashedPassword) {
                 if (err) {
                     reject(err);
+                    console.log(err);
                 } else {
                     resolve(hashedPassword);
                 }
@@ -79,7 +82,9 @@ exports.updateUser = async (id, userData, flag) => {
 
         userData.Password = hashPassword;
     }
-    return UsersModel.update(userData, {
+    console.log(userData.Status);
+    console.log(id);
+    return await UsersModel.update(userData, {
         where: { ID: id }
     });
 }

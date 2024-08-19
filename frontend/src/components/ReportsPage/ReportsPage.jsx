@@ -42,7 +42,7 @@ const ReportsPage = () => {
 
     useEffect(() => {
         if (!sessionStorage.getItem('email')) {
-            navigate('/');
+            navigate('/pagesNavigate');
         }
         else {
             fetchAllReports();

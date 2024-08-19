@@ -14,11 +14,13 @@ import MonitorPage from './components/MonitorPage/MonitorPage';
 import QueueManagmentPage from './components/QueuesManagment/QueuesManagmentPage';
 import logo from './logo.png';
 
-import UserLogin from './components/AdminPage/usersControl/usersLoginControl';
+import UserLogin from './components/AdminPage/usersControl/userLogin';
 
 import './App.css';
 import ConfirmPassword from './components/AdminPage/usersControl/checkPassword';
 import NewPassword from './components/AdminPage/usersControl/newPassword';
+import ForgotPassword from './components/AdminPage/usersControl/forgotPassword';
+
 import ReportsPage from './components/ReportsPage/ReportsPage'
 function App() {
   return (
@@ -41,6 +43,7 @@ function App() {
           <Route path="/QueueManagment" element={<QueueManagmentPage />} />
           <Route path="/checkPassword" element={<ConfirmPassword />} />
           <Route path="/newPassword" element={<NewPassword />} />
+          <Route path="/forgotPassword" element={<ForgotPassword />} />
         </Routes>
       </div>
     </Router>
@@ -52,7 +55,7 @@ function Logo() {
   const navigate = useNavigate();
 
   const handleLogoClick = () => {
-    navigate('/');
+    navigate('/pagesNavigate');
   };
 
   return (

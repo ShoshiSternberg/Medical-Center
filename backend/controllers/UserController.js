@@ -4,10 +4,10 @@ exports.findUserById = async (req, res) => {
     try {
         const user = await UsersService.findUserById(req.params.id);
         // if (user) {
-            return res.json({
-                data: user,
-                message: 'Success.'
-            });
+        return res.json({
+            data: user,
+            message: 'Success.'
+        });
         // } else {
         //     return res.status(404).json({
         //         message: 'User not found.'
@@ -37,6 +37,7 @@ exports.findUserByEmailAddress = async (req, res) => {
         }
     } catch (error) {
         return res.status(500).json({
+            data: null,
             message: 'Internal Server Error',
             error: error.message
         });
@@ -107,15 +108,11 @@ exports.userLogin = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
     try {
-        const updatedUser = await UsersService.updateUser(req.params.id, req.body);
-        if (updatedUser[0] === 1) { // Sequelize returns an array with the number of affected rows
-            return res.json({
-                message: 'User updated successfully.'
-            });
+        const [updated] = await UsersService.updateUser(req.params.id, req.body);
+        if (updated) {
+            res.json({ message: "User updated successfully!" });
         } else {
-            return res.status(404).json({
-                message: 'User not found.'
-            });
+            res.status(404).json({ message: 'User not found' });
         }
     } catch (error) {
         return res.status(500).json({
@@ -124,6 +121,7 @@ exports.updateUser = async (req, res) => {
         });
     }
 }
+
 exports.getPatientsWithQueueDetails = async (req, res) => {
     try {
 

@@ -4,6 +4,7 @@ import MessageItem from './MessageItem';
 import { getAllMessages } from '../../clientServices/MessagesService';
 import NewMessageModal from './NewMessageModal';
 import Sidebar from '../sidebar/sidebar';
+import Role from '../sidebar/role';
 
 
 const MessagePage = () => {
@@ -68,6 +69,9 @@ const MessagePage = () => {
                 open={isAddMessageModalOpen}
                 handleClose={handleCloseAddMessageModal}
             />
+            <div className='roleContainer'>
+                <Role />
+            </div>
         </>
     );
 };

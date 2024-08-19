@@ -18,7 +18,7 @@ function SidebarMenu({ role }) {
 
   useEffect(() => {
     if (!sessionStorage.getItem('email')) {
-      navigate('/');
+      navigate('/pagesNavigate');
     }
   }, []);
 
@@ -27,7 +27,7 @@ function SidebarMenu({ role }) {
   };
 
   const goToHomePage = () => {
-    navigate('/');
+    navigate('/pagesNavigate');
   };
 
 
