@@ -7,13 +7,12 @@ import { getRoles } from '../../../clientServices/RoleService';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 import Role from '../../sidebar/role';
-
-
+import './errorMessage.css';
 
 function MyVerticallyCenteredModal(props) {
     const [newUser, setNewUser] = useState({
         Name: '',
-        RoleID: '',
+        RoleID: 0,
         Password: '',
         Email: '',
         Phone: '',
@@ -23,6 +22,14 @@ function MyVerticallyCenteredModal(props) {
     const navigate = useNavigate();
 
     const [roles, setRoles] = useState([]);
+
+    const [errors, setErrors] = useState({
+        Name: '',
+        RoleID: '',
+        Password: '',
+        Email: '',
+        Phone: '',
+    })
 
     const fetchRoles = async () => {
         try {
@@ -44,86 +51,86 @@ function MyVerticallyCenteredModal(props) {
 
     const validateUserName = () => {
         // Check if username is empty
-        if (!newUser.Name) {
-            return false;
+        if (newUser.Name === '') {
+            return "שדה חובה";
         }
 
         // Check if username contains allowed characters
-        const regex = /^[a-zA-Z0-9-_]{3,30}$/;
+        const regex = /^[a-zA-Z]{3,30}$/;
         if (!regex.test(newUser.Name)) {
-            return false;
+            return "שם לא חוקי";
         }
-
-        return true;
+        return '';
     };
 
     const validatePhoneNumber = () => {
         // Check if phone number is empty
-        if (!newUser.Phone) {
-            return false;
+        if (newUser.Phone === '') {
+            return "שדה חובה";
         }
 
         const regex = /^\d{10}$/;
         if (!regex.test(newUser.Phone)) {
-            return false;
+            return "מספר לא חוקי";
         }
-
-        return true;
+        return '';
     };
 
     const validatePassword = () => {
         // Check if password is empty
-        if (!newUser.Password) {
-            return false;
+        if (newUser.Password === '') {
+            return "שדה חובה";
         }
 
         const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*]{6,}$/;
         if (!regex.test(newUser.Password)) {
-            return false;
+            return "אורך הסיסמא חייב להיות לפחות 6 תווים. סיסמא חייבת לכלול: לפחות אות אחת, לפחות ספרה אחת, לפחות תו מיוחד אחד";
         }
-
-        return true;
+        return '';
     };
 
     const validateEmail = () => {
         // Check if email is empty
-        if (!newUser.Email) {
-            return false;
+        if (newUser.Email === '') {
+            return "שדה חובה";
         }
 
         const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
         if (!regex.test(newUser.Email)) {
-            return false;
+            return "כתובת מייל לא חוקית";
         }
-
-        return true;
+        return '';
     };
 
     const validateRole = () => {
         if (newUser.RoleID === 0) {
-            return false;
+            return "שדה חובה";
         }
-        return true;
+        return '';
     }
 
     const validateInputs = () => {
-        return validateUserName() &&
-            validateRole() &&
-            validatePassword() &&
-            validateEmail() &&
-            validatePhoneNumber();
+        const errors = {
+            Name: validateUserName(),
+            RoleID: validateRole(),
+            Password: validatePassword(),
+            Email: validateEmail(),
+            Phone: validatePhoneNumber(),
+        };
+
+        setErrors(errors);
+        return !Object.values(errors).some(error => error !== '');
     }
 
     const handleCreateUser = async () => {
         try {
             var result = await validateInputs();
             if (!result) {
-                alert("Invalid input");
                 return;
             }
             var isExist = await getUserByEmailAddress(newUser.Email);
-            if (!isExist || !isExist.data) {
-                alert('Email already Exist');
+            if (isExist.data !== null) {
+                setErrors(prev => ({ ...prev, Email: "כתובת המייל כבר קיימת" }));
                 return;
             }
             await createUser(newUser);
@@ -133,6 +140,12 @@ function MyVerticallyCenteredModal(props) {
             console.error('Error creating user:', error);
         }
     };
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setNewUser(prev => ({ ...prev, [name]: value }));
+        setErrors(prev => ({ ...prev, [name]: '' }));
+    }
 
     return (
         <Modal
@@ -147,17 +160,20 @@ function MyVerticallyCenteredModal(props) {
             </Modal.Header>
             <Modal.Body>
                 <h4>הוספת משתמש חדש</h4>
-                <form>
+                <form className="form-container">
                     <input
                         type="text"
+                        name="Name"
                         placeholder="Name"
                         value={newUser.Name}
-                        onChange={(e) => setNewUser({ ...newUser, Name: e.target.value })}
+                        onChange={handleInputChange}
                     />
+                    <span className='errorMessage'>{errors.Name}</span>
                     {roles ? (
                         <select
+                            name="RoleID"
                             value={newUser.RoleID}
-                            onChange={(e) => setNewUser({ ...newUser, RoleID: e.target.value })}
+                            onChange={handleInputChange}
                         >
                             <option key={0} value={0}>
                                 Role
@@ -171,25 +187,33 @@ function MyVerticallyCenteredModal(props) {
                     ) : (
                         <p>Loading roles...</p>
                     )}
+                    <span className='errorMessage'>{errors.RoleID}</span>
                     <input
+                        name="Password"
                         type="password"
                         placeholder="Password"
                         value={newUser.Password}
-                        onChange={(e) => setNewUser({ ...newUser, Password: e.target.value })}
+                        onChange={handleInputChange}
                     />
+                    <span className='errorMessage'>{errors.Password}</span>
                     <input
                         type="email"
+                        name="Email"
                         placeholder="Email"
                         value={newUser.Email}
-                        onChange={(e) => setNewUser({ ...newUser, Email: e.target.value })}
+                        onChange={handleInputChange}
                     />
+                    <span className='errorMessage'>{errors.Email}</span>
                     <input
                         type="text"
+                        name="Phone"
                         placeholder="Phone"
                         value={newUser.Phone}
-                        onChange={(e) => setNewUser({ ...newUser, Phone: e.target.value })}
+                        onChange={handleInputChange}
                     />
+                    <span className='errorMessage'>{errors.Phone}</span>
                 </form>
+                {errors.global && (<span className='errorMessage'>{errors.global}</span>)}
             </Modal.Body>
             <Modal.Footer>
                 <Button onClick={props.onHide}>סגירה</Button>

@@ -24,17 +24,21 @@ exports.findUserById = async (req, res) => {
 exports.findUserByEmailAddress = async (req, res) => {
     try {
         const user = await UsersService.findUserByEmailAddress(req.params.emailAddress);
-        if (user) {
-            return res.json({
-                data: user,
-                message: 'Success.'
-            });
-        } else {
-            return res.status(404).json({
-                data: null,
-                message: 'User not found.'
-            });
-        }
+        // if (user) {
+        //     return res.json({
+        //         data: user,
+        //         message: 'Success.'
+        //     });
+        // } else {
+        //     return res.status(404).json({
+        //         data: null,
+        //         message: 'User not found.'
+        //     });
+        // }
+        return res.json({
+            data: user,
+            message: 'Success.'
+        });
     } catch (error) {
         return res.status(500).json({
             data: null,
