@@ -1,0 +1,318 @@
+.patientEnterCont {
+    display: flex;
+    height: 100vh;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: center;
+    direction: rtl;
+    background-image: linear-gradient(109.6deg, rgb(141, 244, 239) 11.2%, rgb(32, 50, 213) 91.1%);
+
+}
+
+.enterBoardCont {
+    background-color: white;
+    width: fit-content;
+    height: fit-content;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 100px;
+}
+
+.enterBoard {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* doctorImg ------------------------------------- */
+.doctorImg {
+    height: 50%;
+    bottom: 0;
+    position: fixed;
+    right: 0;
+    margin-right: 2%;
+}
+
+/* Keyboard style ------------------------------------ */
+
+.virtualKeyboard {
+    display: flex;
+    flex-wrap: wrap;
+    width: 600px;
+    align-items: center;
+    justify-content: center;
+}
+
+.keyboard {
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+    border: none;
+    margin: 5px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 600;
+    font-size: 15pt;
+}
+
+.keyboard:hover {
+    background-color: #352ce1;
+    color: white;
+    cursor: pointer;
+}
+
+.inputNameBtn {
+    background-color: rgb(239 243 255);
+    color: rgb(56, 58, 58);
+    border: none;
+    width: 200px;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 10px;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 600;
+    font-size: 15pt;
+}
+
+.continueBtn {
+    margin-top: 50px;
+    background-image: linear-gradient(to right, #4cd1f9 0%, #3762f0 51%, #368cdc 100%);
+    background-size: 200% auto;
+    border-radius: 20px;
+    padding: 7px;
+    width: 32%;
+    font-weight: 600;
+    color: #ffffff;
+    border: none;
+
+
+
+}
+
+.deletePrevBtn {
+    background-color: rgb(239 243 255);
+    color: rgb(56, 58, 58);
+    font-weight: 700;
+    font-size: 15pt;
+}
+
+.spaceBtn {
+    background-color: rgb(239 243 255);
+    color: rgb(56, 58, 58);
+    width: 120px;
+    height: 60px;
+    border-radius: 5px;
+    border: none;
+    margin: 5px;
+    font-weight: 700;
+    font-size: 15pt;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+
+}
+
+
+
+/* Clinic style ------------------------------------ */
+.insertClinic {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.allClinic {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.clinic {
+    padding: 10px;
+    margin: 10px;
+    border: none;
+    border-radius: 10px;
+    width: 200px;
+    font-weight: 700;
+    font-size: 15pt;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+.clinic:hover {
+    background-color: #352ce1;
+    color: white;
+    cursor: pointer;
+}
+
+.inputClinicBtn {
+    background-color: rgb(239 243 255);
+    color: rgb(56, 58, 58);
+    border: none;
+    width: 250px;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 30px;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 600;
+    font-size: 15pt;
+
+}
+
+
+/* Number note style ------------------------------------ */
+.numberNote {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.patientInfo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.numberCont {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 200px;
+    height: 150px;
+    border-radius: 10px;
+    background-image: linear-gradient(to right, #36D1DC 0%, #1c33de 51%, #36D1DC 100%);
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    box-shadow: 0 0 20px #eee;
+    font-weight: 600;
+    font-size: 13pt;
+    margin: 8px;
+    padding: 10px;
+
+
+}
+
+.uniqueNumber {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 700;
+    font-size: 40pt;
+}
+
+.moreDetails {
+    background-color: rgb(239 243 255);
+    color: rgb(56, 58, 58);
+    border: none;
+    width: 200px;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 8px;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 600;
+    font-size: 14pt;
+
+}
+
+.saveNumber {
+    margin: 10px;
+}
+
+
+
+
+/* Media query for tablets (landscape and portrait) */
+@media screen and (max-width: 768px) {
+    .enterBoardCont {
+        width: 550px;
+        height: 550px;
+    }
+
+    .doctorImg {
+        height: 50%;
+        bottom: 0;
+        position: fixed;
+        right: 0;
+    }
+
+
+
+    .patientEnterCont {
+        position: relative;
+
+    }
+
+
+
+    .enterBoard {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .logo {
+        width: 80px;
+    }
+
+    .virtualKeyboard {
+        display: flex;
+        flex-wrap: wrap;
+        width: 400px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .keyboard {
+        width: 50px;
+        height: 50px;
+        border-radius: 5px;
+        border: none;
+        margin: 3px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-weight: 600;
+        font-size: 12pt;
+    }
+
+
+
+    .inputNameBtn {
+        width: 170px;
+        padding: 15px;
+        margin: 10px;
+        font-size: 13pt;
+    }
+
+    .continueBtn {
+        padding: 8px;
+        margin: 20px;
+        width: 100px;
+        font-size: 12pt;
+    }
+
+    .deletePrevBtn {
+        font-size: 12pt;
+        margin: 3px;
+        font-weight: 700;
+
+    }
+
+    .spaceBtn {
+        width: 100px;
+        height: 50px;
+        margin: 3px;
+        font-size: 12pt;
+    }
+
+
+}

@@ -1,0 +1,17 @@
+
+
+.usersPageContainer {
+ 
+    direction: rtl;
+    height: 100vh;
+
+    background-color: #f1f7ff;
+}
+
+.usersPageCont{
+    margin-top: 120px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

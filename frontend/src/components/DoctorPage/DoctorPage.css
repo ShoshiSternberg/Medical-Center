@@ -1,0 +1,141 @@
+.doctorPageContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+
+.moveQueue {
+    border-radius: 10px;
+    width: 150px;
+    height: 100px;
+    margin: 10px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    font-weight: 600;
+    font-size: 11pt;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #e8ebff;
+}
+
+.moveQueue:hover {
+    background-color: #c9d0ff;
+    cursor: pointer;
+}
+
+.queuesList {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.queuesCont {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgb(255, 255, 255);
+    border-radius: 20px;
+    padding: 10px;
+    margin: 20px;
+    width: 72%;
+    height: 600px;
+    justify-content: center;
+}
+
+.allQueues {
+    display: flex;
+    justify-content: center;
+}
+
+.queueDetails {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;  
+    justify-content: center;
+}
+
+
+.currentPatient {
+    background-image: linear-gradient(to right, #36D1DC 0%, #142ad0  51%, #36D1DC  100%);
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+    color: white;
+    font-weight: 600;
+    font-size: 20pt;
+    padding: 30px;
+    width: 500px;
+    margin: 10px;
+
+
+}
+
+.nextPatient {
+    font-size: 10pt;
+    border: 1px solid #1528b4;
+    background-color: white;
+    padding: 10px 30px 10px 30px;
+    width: 500px;
+    border-radius: 10px;
+    margin: 10px;
+
+}
+
+
+
+.patientNumber {
+    font-weight: 700;
+    font-size: 40pt;
+}
+
+.queueDetTitle {
+    font-weight: 700;
+}
+
+
+.queueIcon {
+    color: rgb(94, 70, 255);
+
+}
+
+button{
+    border:none;
+    outline: none;
+}
+
+
+.anotherButtons {
+    border-radius: 10px;
+    width: 400px;
+    height: 60px;
+    margin: 10px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    font-weight: 600;
+    font-size: 11pt;
+    flex-direction: column;
+    justify-content: center;  
+    cursor: pointer;  
+}
+
+.emergencyAlert{
+    background-color: rgb(250, 67, 67);
+}
+.EndOfTreatment{
+    border: red solid 1px;
+    background-color: white;
+    color: red;
+}
+

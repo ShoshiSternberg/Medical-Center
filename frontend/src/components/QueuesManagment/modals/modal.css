@@ -1,0 +1,15 @@
+
+.cancalOrSubmitBtn {
+    margin: 10px;
+    background-image: linear-gradient(to right, #4ca0f9 0%, #3762f0 51%, #368cdc 100%);
+    background-size: 200% auto;
+    border-radius: 20px;
+    padding: 5px 20px 5px 20px;
+    font-size: 10pt;
+    text-align: center;
+    font-weight: 500;
+    color: #ffffff;
+    border: none;
+    font-weight: 600;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif ;
+}

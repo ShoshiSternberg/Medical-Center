@@ -1,0 +1,73 @@
+.RoomMonitorQueueContainer {
+    display: flex;
+    flex-direction: column;
+    direction: rtl;
+    align-items: center;
+    justify-content: center;
+
+}
+
+
+
+.currentPatientNumber {
+    color: #3b6ff2;
+    font-size: 40pt;
+    font-weight: 700;
+}
+
+
+.next{
+    margin: 5px;
+}
+
+.roomMonitorTitle {
+    font-size: 22pt;
+    font-weight: 700;
+    margin-bottom: 10px;
+    border-bottom-left-radius: 100px;
+    border-bottom-right-radius: 100px;
+
+    background-image: linear-gradient(to right, #4ca0f9 0%, #3762f0 51%, #368cdc 100%);
+    background-size: 200% auto;
+    color: white;
+        width: 70%;
+    padding: 8px;
+
+}
+
+.next3MonitorPatients {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+
+}
+
+.numOfWaitPatients {
+    background-image: linear-gradient(to right, #4ca0f9 0%, #3762f0 51%, #368cdc 100%);
+    background-size: 200% auto;
+    border-radius: 100px;
+    color: white;
+    width: 50px;
+    margin-right: 5px;
+    font-weight: 600;
+}
+
+.numOfWaitPatientsContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    font-size: 10pt;
+}
+
+@media (max-width: 768px) {
+  
+    .currentPatientNumber {
+        font-size: 30pt;
+    }
+    .roomMonitorTitle {
+        font-size: 18pt;       
+        width: 60%;
+    }
+}

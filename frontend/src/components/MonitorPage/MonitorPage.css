@@ -1,0 +1,55 @@
+
+.monitorPageContainerFull {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+
+    height: 100vh;
+
+}
+
+
+.monitorPageContainer {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: center;
+
+
+}
+
+
+
+.queuesRoomsMonitorContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+
+}
+
+.roomMonitorContainer {
+    border-radius: 10px;
+    margin: 20px;
+    width: 350px;
+    height: 225px;
+    background-color: white;
+    box-shadow: 1px 6px 20px 0px #696969;
+    border-inline: 10px solid rgb(201, 47, 47);
+}
+
+.dateDisplay{
+    color: white;
+    font-weight: 700;
+    font-size: 18pt;
+}
+
+@media (max-width: 768px) {
+    .roomMonitorContainer {      
+        width: 250px;
+        height: 190px;      
+    }
+}

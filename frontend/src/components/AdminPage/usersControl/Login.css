@@ -1,0 +1,80 @@
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(241 247 255);
+    width:400px;
+    border-radius: 20px;
+    direction: rtl;
+    padding: 50px;
+
+    
+}
+.loginPageCont{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 70%;
+
+
+}
+
+.userLoginCont{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+.login-btn {
+    margin: 20px;
+    background-image: linear-gradient(to right, #71b3fa 0%, #204feb 51%, #368cdc 100%);
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    border-radius: 100px;
+    padding: 10px 30px 10px 30px;
+    text-align: center;
+    border: none;
+    width: fit-content;
+    font-weight: 500;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-input {
+    display: flex;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    width: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+}
+
+.logo-img{
+    width: 100px;
+    margin-bottom: 30px;
+}
+.login-title{
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+.forgot-password-btn{
+    background-color: rgb(241 247 255);
+    text-decoration: underline;
+    color: #204feb;
+}

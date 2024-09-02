@@ -1,0 +1,52 @@
+
+   .icon {
+color: #3762f0;
+font-size: 100pt;
+  }
+
+  .menu-btn{
+    margin: 20px;
+    background-image: linear-gradient(to right, #4ca0f9 0%, #3762f0  51%, #368cdc  100%);
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    border-radius: 10px;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    border:none;
+    width:100%;
+    font-weight: 500;
+    font-size: 10pt;
+    color: #ffffff;
+    padding-right: 15%;
+    text-align: right;
+  }
+  .gradient-section {
+    background-image: linear-gradient(to right, #36D1DC 0%, #142ad0  51%, #36D1DC  100%);
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    border-radius: 10px;
+    color: white;
+    font-weight: 600;
+    font-size: 16pt;
+    padding: 30px;
+    width: 200px;
+    margin: 10px;
+
+
+
+  }
+
+  
+
+  .sidebarContainer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+  }

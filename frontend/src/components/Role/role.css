@@ -1,0 +1,50 @@
+
+
+
+/* role style */
+.roleContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 20px;
+    direction: rtl;
+    font-size: 10pt;
+    box-shadow: 0px 1px 14px 0px rgb(229 229 229);
+}
+
+
+.roleDetail{
+    display: flex;
+    align-items: center;
+    font-size: 10pt;
+
+}
+
+.roleDetailName{
+    padding: 5px;
+    font-weight: 600;
+    font-size: 10pt;
+
+
+}
+.roleDetailCont{
+    display: flex;
+    background-color: white;
+    border-radius: 10px;
+    padding: 5px 20px 5px 20px;
+    flex-direction: column;
+    font-size: 10pt;
+
+}
+
+.logout-btn{
+    background-color: rgb(241 247 255);
+    color: #204feb;
+    border-radius: 5px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 600;
+    margin: 5px;
+    padding: 5px;
+    font-size:10pt;
+
+}

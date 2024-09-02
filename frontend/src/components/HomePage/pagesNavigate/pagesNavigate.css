@@ -1,0 +1,64 @@
+.pagesContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 30px;
+}
+
+.page-btn {
+    margin: 10px;
+    background-image: linear-gradient(to right, #44aceb 0%, #3762f0 51%, #368cdc 100%);
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    border-radius: 10px;
+    color: white;
+    padding: 10px;
+    width: 120px;
+    font-weight: 500;
+    font-size: 10pt;
+}
+
+.pagesBtnsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 200px;
+    flex-wrap: wrap;
+
+}
+
+
+.pagesContainerContainer {
+    background-color: #ffffff;
+    padding: 0px 40px 40px 40px;
+    border-radius: 8px;
+    direction: rtl;
+    height:fit-content;
+    width: 50%;
+    margin: 50px;
+}
+
+
+.PagesNavigationContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f1f7ff;
+    height: 100vh;
+    /* padding: 100px; */
+}
+
+.pagesContainerTitle {
+    font-weight: 700;
+    margin-bottom: 50px;
+    border-bottom-left-radius: 100px;
+    border-bottom-right-radius: 100px;
+    background-image: linear-gradient(to right, #4ca0f9 0%, #3762f0 51%, #368cdc 100%);
+    background-size: 200% auto;
+    color: white;
+    width: 20%;
+    padding: 8px;
+}

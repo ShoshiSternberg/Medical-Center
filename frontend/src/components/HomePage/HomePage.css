@@ -1,0 +1,31 @@
+.HomePageContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    margin: 30px;
+}
+
+.pagesNavigate-btn {
+    margin: 20px;
+    background-image: linear-gradient(to right, #4ca0f9 0%, #3762f0 51%, #368cdc 100%);
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    border-radius: 100px;
+    padding: 10px;
+    text-align: center;
+    border: none;
+    width: 200px;
+    font-weight: 500;
+    color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagesNavigate-text{
+    margin-left: 10px;
+}
