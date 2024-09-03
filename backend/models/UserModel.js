@@ -39,7 +39,7 @@ const UsersModel = db.define("users", {
         defaultValue: true
     }
 }, {
-    tableName: 'Users',
+    tableName: 'users',
     timestamps: false
 });
 
