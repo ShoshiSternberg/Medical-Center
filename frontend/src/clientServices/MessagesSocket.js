@@ -7,7 +7,7 @@ const useMessagesSocket = () => {
     const socketRef = useRef(null);
 
     useEffect(() => {
-        socketRef.current = socketIO("http://localhost:8000", {
+        socketRef.current = socketIO("https://medical-center-znya.onrender.com", {
             query: { clientId: "messagesPage" }
         });
 
