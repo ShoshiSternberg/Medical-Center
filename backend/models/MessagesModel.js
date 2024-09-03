@@ -17,7 +17,7 @@ const MessagesModel = db.define("messages", {
         allowNull: false 
     },
 }, {
-    tableName: 'Messages',
+    tableName: 'messages',
     timestamps: false
 });
 
