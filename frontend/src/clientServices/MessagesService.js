@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8000/messages';
+const API_URL = 'https://medical-center-znya.onrender.com/messages';
 
 export const getAllMessages = async () => {
     return axios.get(API_URL);
