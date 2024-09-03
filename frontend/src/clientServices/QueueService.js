@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8000/queues';
+const API_URL = 'https://medical-center-znya.onrender.com/queues';
 
 // Fetch all queues
 export const getAllQueues = async () => {
