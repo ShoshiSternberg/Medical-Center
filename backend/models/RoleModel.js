@@ -17,7 +17,7 @@ const RoleModel = db.define("roles", {
         allowNull: false
     }
 }, {
-    tableName: 'Roles',
+    tableName: 'roles',
     timestamps: false
 });
 

@@ -18,7 +18,7 @@ const RoomModel = db.define("rooms", {
         defaultValue: true
     }
 }, {
-    tableName: 'Rooms',
+    tableName: 'rooms',
     timestamps: false
 });
 
