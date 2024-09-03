@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8000/users';
+const API_URL = 'https://medical-center-znya.onrender.com/users';
 
 export const getUsers = async () => {
   try {
