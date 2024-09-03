@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8000/HMOs'; // Adjust the base URL as necessary
+const API_URL = 'https://medical-center-znya.onrender.com/HMOs'; // Adjust the base URL as necessary
 
 // Fetch a single HMO by ID
 export const getHMOById = async (id) => {
