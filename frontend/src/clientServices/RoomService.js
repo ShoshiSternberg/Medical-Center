@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8000/rooms';
+const API_URL = 'https://medical-center-znya.onrender.com/rooms';
 
 export const getAllRooms = async () => {
     return axios.get(API_URL);
