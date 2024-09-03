@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8000/reports'; // Adjust the base URL as necessary
+const API_URL = 'https://medical-center-znya.onrender.com/reports'; // Adjust the base URL as necessary
 
 // Fetch a single report by ID
 export const getReportById = async (id) => {
