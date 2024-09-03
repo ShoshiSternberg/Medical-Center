@@ -54,7 +54,7 @@ const PatientModel = db.define("patients", {
         defaultValue: true
     }
 }, {
-    tableName: 'Patients',
+    tableName: 'patients',
     timestamps: false
 });
 
