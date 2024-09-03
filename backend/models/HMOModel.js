@@ -12,7 +12,7 @@ const HMOModel = db.define('HMOs', {
         allowNull: false
     }
 }, {
-    tableName: 'HMOs',
+    tableName: 'hmos',
     timestamps: false
 });
 
