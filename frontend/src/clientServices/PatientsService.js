@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8000/patients';
+const API_URL = 'https://medical-center-znya.onrender.com/patients';
 
 export const getAllPatientsWithQueueDetails = async () => {
     return axios.get(`${API_URL}/patientQueueDetails`);
