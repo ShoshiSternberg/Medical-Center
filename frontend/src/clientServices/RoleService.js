@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8000/roles';
+const API_URL = 'https://medical-center-znya.onrender.com/roles';
 
 export const getRoles = async () => {
   const response = await axios.get(API_URL);
