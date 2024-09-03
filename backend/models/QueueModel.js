@@ -29,7 +29,7 @@ const QueueModel = db.define("queues", {
         type: DataTypes.INTEGER,
         allowNull: false,
 }}, {
-    tableName: 'Queues',
+    tableName: 'queues',
     timestamps: false
 });
 
