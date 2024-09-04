@@ -8,7 +8,7 @@ import background from "./background.jpg";
 
 const MonitorPage = () => {
     const [rooms, setRooms] = useState([]);
-    const socketUrl = "http://localhost:8000"; 
+    const socketUrl = "https://medical-center-znya.onrender.com/"; 
     const [messages, setMessages]=useState([]);
     const { subscribeToRoom, queuesByRoom,socket } = useMonitorSocket(socketUrl,messages,setMessages);
     const [currentDate, setCurrentDate] = useState('');
