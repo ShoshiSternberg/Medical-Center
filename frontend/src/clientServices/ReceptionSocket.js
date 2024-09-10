@@ -5,7 +5,7 @@ const useReceptionSocket = (setSelectedPatient, patients, setPatients) => {
     const socketRef = useRef(null);
 
     useEffect(() => {
-        socketRef.current = socketIO("https://medical-center-znya.onrender.com/", {
+        socketRef.current = socketIO("https://medical-center-znya.onrender.com", {
             query: { clientId: "reception" }
         });
 
