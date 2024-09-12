@@ -60,5 +60,5 @@ const server = createSocketServer(app);
 initManager();
 
 server.listen(8000, () => {
-    console.log('Server UP running in http://localhost:8000/');
+    console.log(`Server UP running in ${process.env.REACT_APP_SERVICE_URL}`);
 });

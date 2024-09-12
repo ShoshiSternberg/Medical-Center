@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://medical-center-znya.onrender.com/users';
+const API_URL = `${process.env.REACT_APP_SERVICE_URL}users/`;
 
 export const getUsers = async () => {
   try {
@@ -16,7 +16,7 @@ export const getUsers = async () => {
 
 export const getUserById = async (id) => {
   try {
-    const response = await axios.get(`${API_URL}/id/${id}`);
+    const response = await axios.get(`${API_URL}id/${id}`);
     return response.data;
   }
   catch (error) {
@@ -28,7 +28,7 @@ export const getUserById = async (id) => {
 
 export const getUserByEmailAddress = async (emailAddress) => {
   try {
-    const response = await axios.get(`${API_URL}/email/${emailAddress}`);
+    const response = await axios.get(`${API_URL}email/${emailAddress}`);
     console.log("checkEmail",response.data)
     return response.data;
   }
@@ -41,6 +41,7 @@ export const getUserByEmailAddress = async (emailAddress) => {
 
 export const createUser = async (user) => {
   try {
+    
     const response = await axios.post(API_URL, user);
     return response.data;
   }
@@ -53,7 +54,8 @@ export const createUser = async (user) => {
 
 export const userLogin = async (user) => {
   try {
-    const response = await axios.post(`${API_URL}/login`, user);
+    console.log(process.env.REACT_APP_SERVICE_URL);
+    const response = await axios.post(`${API_URL}login`, user);
     console.log(response)
     return response.data;
   }
@@ -66,7 +68,7 @@ export const userLogin = async (user) => {
 export const updateUser = async (id, user) => {
 
   try {
-    const response = await axios.put(`${API_URL}/${id}`, user);
+    const response = await axios.put(`${API_URL}${id}`, user);
     return response.data;
   }
   catch (error) {
@@ -78,7 +80,7 @@ export const updateUser = async (id, user) => {
 
 export const deleteUser = async (id) => {
   try {
-    const response = await axios.delete(`${API_URL}/${id}`);
+    const response = await axios.delete(`${API_URL}${id}`);
   return response.data;
   }
   catch (error) {

@@ -5,7 +5,7 @@ const useSocket = (setPatientDetails) => {
     const socketRef = useRef(null);
 
     useEffect(() => {
-        socketRef.current = socketIO("https://medical-center-znya.onrender.com", {
+        socketRef.current = socketIO(process.env.REACT_APP_SERVICE_URL, {
             query: { clientId: "PatientEnter" }
         });
 
