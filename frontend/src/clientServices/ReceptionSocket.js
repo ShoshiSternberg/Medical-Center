@@ -6,6 +6,7 @@ const useReceptionSocket = (setSelectedPatient, patients, setPatients) => {
 
     useEffect(() => {
         socketRef.current = socketIO(process.env.REACT_APP_SERVICE_URL, {
+
             query: { clientId: "reception" }
         });
 
