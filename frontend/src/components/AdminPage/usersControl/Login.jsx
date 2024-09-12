@@ -3,12 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import './Login.css';
 import logo from '../../../logo.png';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import LoadingButton from '@mui/lab/LoadingButton';
 import { getUserByEmailAddress, userLogin } from '../../../clientServices/UserService';
 import emailjs from 'emailjs-com';
 import { getRoleById } from '../../../clientServices/RoleService';
 
 const Login = () => {
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
 
     emailjs.init('OGeC5v16OEXHrsSlr');
 
@@ -29,11 +31,11 @@ const Login = () => {
     const handleUserLogin = async (e) => {
         console.log(1)
 
-        e.preventDefault();
+        //e.preventDefault();
         try {
 
             const userData = await userLogin(user);
-            if (userData!=null) {
+            if (userData != null) {
                 sessionStorage.setItem('email', userData.data.Email);
                 sessionStorage.setItem('name', userData.data.Name);
 
@@ -44,11 +46,11 @@ const Login = () => {
                 } else if (userData.data.RoleID === 2) {
                     navigate('/pagesNavigate', { state: 2 });
                 } else {
-                    navigate('/pagesNavigate' , { state: 3 });
+                    navigate('/pagesNavigate', { state: 3 });
                 }
             }
         } catch (error) {
-            console.error('בעיה בכניסת משתמש',3, error);
+            console.error('בעיה בכניסת משתמש', 3, error);
             alert("שגיאה");
         }
     };
@@ -73,7 +75,7 @@ const Login = () => {
                     alert("מייל זה לא קיים במערכת");
                 } else {
                     sessionStorage.setItem('email', isExist.data.Email);
-                    sessionStorage.setItem('name',  isExist.data.Name);
+                    sessionStorage.setItem('name', isExist.data.Name);
 
                     var role = await getRoleById(isExist.data.RoleID);
                     sessionStorage.setItem('role', role.data.Role);
@@ -109,54 +111,72 @@ const Login = () => {
         }
     };
 
+
     return (
         <>
-        <div className='loginPageCont'>
-        <div className="login-container">
-            <img className='logo-img' alt='logo' src={logo} />
+            <div className='loginPageCont'>
+                <div className="login-container">
+                    <img className='logo-img' alt='logo' src={logo} />
 
-            <div className='login-title'>כניסת משתמש</div>
-            <form className='login-form' onSubmit={handleUserLogin}>
-                <input
-                    className='login-input'
-                    type="email"
-                    name="Email"
-                    placeholder='אימייל'
-                    value={user.Email}
-                    onChange={handleChange}
-                    required
-                />
-                {!isForgotPassword && (
-                    <input
-                        className='login-input'
-                        type="password"
-                        name="Password"
-                        placeholder='סיסמא'
-                        value={user.Password}
-                        onChange={handleChange}
-                        required
-                    />
-                )}
-                {!isForgotPassword && (
-                    <button className='login-btn' type="submit">
-                        <span className='pagesNavigate-text'>
-                            כניסה
-                        </span>
-                        <ArrowBackIcon />
+                    <div className='login-title'>כניסת משתמש</div>
+                    <form className='login-form' onSubmit={handleUserLogin}>
+                        <input
+                            className='login-input'
+                            type="email"
+                            name="Email"
+                            placeholder='אימייל'
+                            value={user.Email}
+                            onChange={handleChange}
+                            required
+                        />
+                        {!isForgotPassword && (
+                            <input
+                                className='login-input'
+                                type="password"
+                                name="Password"
+                                placeholder='סיסמא'
+                                value={user.Password}
+                                onChange={handleChange}
+                                required
+                            />
+                        )}
+                        {!isForgotPassword && (
+                            <LoadingButton
+                                className='login-btn'
+                                loading={loading}
+                                sx={{
+                                    backgroundColor: 'transparent', // Remove default background
+                                    boxShadow: 'none', // Remove default shadow
+                                    '&:hover': {
+                                      backgroundColor: 'transparent', // Ensure no hover effect
+                                    },
+                                    color: '#ffffff', // Customize text color
+                                    border: 'none', // Remove border
+                                    padding: '10px 30px 10px 30px',
+                                    borderRadius: '100px',
+                                    // Adjust padding if needed
+                                  }}
+                                type="submit"
+                                onClick={() => { setLoading(true); handleUserLogin(); }}
+                            >
+                                <span className='pagesNavigate-text'>
+                                    כניסה
+                                </span>
+                                <ArrowBackIcon />
+                            </LoadingButton>
+                        )}
+                    </form>
+                    <button
+                        className='forgot-password-btn'
+                        onClick={(e) => {
+                            setIsForgotPassword(true);
+                            handleForgotPassword(e);
+                        }}
+                    >
+                        שכחתי סיסמא
                     </button>
-                )}
-            </form>
-            <button
-                className='forgot-password-btn'
-                onClick={(e) => {
-                    setIsForgotPassword(true);
-                    handleForgotPassword(e);
-                }}
-            >
-                שכחתי סיסמא
-            </button>
-        </div>
-        </div>
+                </div>
+            </div>
         </>
     );
 };

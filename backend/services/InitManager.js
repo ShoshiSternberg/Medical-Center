@@ -5,7 +5,6 @@ const User = require('../services/UsersService'); // Assuming you have a User mo
 const initManager = async () => {
   const managerEmail = process.env.MANAGER_EMAIL;
   const managerPassword = process.env.MANAGER_PASSWORD;  
-  console.log(process.env);
 
   try {
     // Check if the manager already exists
