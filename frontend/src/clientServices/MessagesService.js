@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://medical-center-znya.onrender.com/messages';
+const API_URL = `${process.env.REACT_APP_SERVICE_URL}messages`;
 
 export const getAllMessages = async () => {
     return axios.get(API_URL);

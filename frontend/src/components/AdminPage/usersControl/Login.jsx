@@ -52,7 +52,7 @@ const Login = () => {
         } catch (error) {
 
             console.error('בעיה בכניסת משתמש',3, error);
-            alert("שגיאה בהזנת הפרטים");
+            alert("שגיאה");
         }
     };
 

@@ -1,12 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
 import socketIO from 'socket.io-client';
 
-const useMonitorSocket = (socketUrl,messages,setMessages) => {
+const useMonitorSocket = (messages,setMessages) => {
     const [socket, setSocket] = useState(null);
     const [queuesByRoom, setQueuesByRoom] = useState({});
 
     useEffect(() => {
-        const newSocket = socketIO(socketUrl, {
+        const newSocket = socketIO(process.env.REACT_APP_SERVICE_URL, {
             query: { clientId:"monitor" }
         });
         setSocket(newSocket);
@@ -37,7 +37,7 @@ const useMonitorSocket = (socketUrl,messages,setMessages) => {
         return () => {
             newSocket.disconnect();
         };
-    }, [socketUrl]);
+    }, []);
 
     const subscribeToRoom = useCallback((roomId) => {
         if (socket&&!queuesByRoom[roomId]) {

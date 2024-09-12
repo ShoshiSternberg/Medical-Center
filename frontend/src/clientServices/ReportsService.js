@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://medical-center-znya.onrender.com/reports'; // Adjust the base URL as necessary
+const API_URL = `${process.env.REACT_APP_SERVICE_URL}reports`; 
 
 // Fetch a single report by ID
 export const getReportById = async (id) => {

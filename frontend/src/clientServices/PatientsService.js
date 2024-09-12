@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://medical-center-znya.onrender.com/patients';
+const API_URL = `${process.env.REACT_APP_SERVICE_URL}patients`;
 
 export const getAllPatientsWithQueueDetails = async () => {
     return axios.get(`${API_URL}/patientQueueDetails`);
