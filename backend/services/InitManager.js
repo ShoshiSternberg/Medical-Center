@@ -1,5 +1,3 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 const User = require('../services/UsersService'); // Assuming you have a User model
 
 const initManager = async () => {

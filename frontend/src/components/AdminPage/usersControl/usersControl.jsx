@@ -14,12 +14,13 @@ import {
     TableRow,
     Paper
 } from '@mui/material';
-import { getUsers, createUser, getUserByEmailAddress } from '../../../clientServices/UserService';
+import { getUsers, createUser, getUserByEmailAddress, deleteUser } from '../../../clientServices/UserService';
 import { getRoles } from '../../../clientServices/RoleService';
 import { useLocation } from 'react-router-dom';
 import Sidebar from '../../sidebar/sidebar';
 import Role from '../../Role/role';
-import './usersControl.css'
+import './usersControl.css';
+import Swal from 'sweetalert2';
 
 
 function MyVerticallyCenteredModal(props) {
@@ -158,7 +159,7 @@ function MyVerticallyCenteredModal(props) {
                         label="שם"
                         value={newUser.Name}
                         onChange={(e) => setNewUser({ ...newUser, Name: e.target.value })}
-                        error={errors.Name!=''}
+                        error={errors.Name != ''}
                         helperText={errors.Name}
                         fullWidth
                         margin="normal"
@@ -239,6 +240,43 @@ const UsersTable = () => {
         fetchUsers();
     }, []);
 
+    const [selectedUser, setSelectedUser] = useState(null);
+    const [updateUserModalOpen, setUpdateUserModalOpen] = useState(false);
+
+    const deleteUserById = async (userId) => {
+        await deleteUser(userId); // Call delete user API from UserService
+        const updatedUsers = users.filter((user) => user.ID !== userId);
+        setUsers(updatedUsers);
+    }
+
+    const handleDeleteUser = async (userId) => {
+        Swal.fire({
+            title: 'האם אתה בטוח?',
+            text: 'פעולה זו תמחק את המשתמש באופן סופי',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'אישור',
+            cancelButtonText: 'ביטול'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // אם המשתמש אישר, בצע את פעולת המחיקה
+                try {
+                    deleteUserById(userId);
+                } catch (error) {
+                    console.error("Error deleting user:", error);
+
+                }
+            }
+        });
+    };
+
+    const handleUpdateUserOpen = (user) => {
+        setSelectedUser(user);
+        setUpdateUserModalOpen(true);
+    };
+
     return (
         <Box sx={{ display: 'flex', justifyContent: 'center', width: '50%', direction: 'rtl' }}>
             <TableContainer component={Paper} sx={{ width: '100%' }}>
@@ -249,6 +287,7 @@ const UsersTable = () => {
                             <TableCell>שם משתמש</TableCell>
                             <TableCell>מייל</TableCell>
                             <TableCell>מספר טלפון</TableCell>
+                            <TableCell></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -258,6 +297,14 @@ const UsersTable = () => {
                                 <TableCell>{user.Name}</TableCell>
                                 <TableCell>{user.Email}</TableCell>
                                 <TableCell>{user.Phone}</TableCell>
+                                <TableCell>
+                                    <Button variant="contained" color="primary" size="small" onClick={() => handleUpdateUserOpen(user)}>
+                                        עדכון
+                                    </Button>
+                                    <Button variant="contained" color="error" size="small" onClick={() => handleDeleteUser(user.ID)}>
+                                        מחיקה
+                                    </Button>
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
