@@ -176,7 +176,7 @@ const UsersTable = forwardRef((props, ref) => {
     );
 });
 
-function AddUserModal({ open, handleClose, user }) {
+function AddUserModal({ open, handleClose, user, createOrUpdate }) {
     const [newUser, setNewUser] = React.useState({
         Name: '',
         RoleID: '',
@@ -187,10 +187,20 @@ function AddUserModal({ open, handleClose, user }) {
     });
 
     useEffect(() => {
-        if (user !== null) {
+        if (createOrUpdate === false && user) {
             setNewUser(user);
         }
-    }, [user]);
+        else {
+            setNewUser({
+                Name: '',
+                RoleID: '',
+                Password: '',
+                Email: '',
+                Phone: '',
+                Status: true
+            });
+        }
+    }, [createOrUpdate, user]);
 
     const [roles, setRoles] = useState([]);
 
@@ -277,7 +287,7 @@ function AddUserModal({ open, handleClose, user }) {
     };
 
     const validateInputs = () => {
-        if (user)
+        if (createOrUpdate === false)
             return validateUserName() && validateRole() && validateEmail() && validatePhoneNumber();
         return validateUserName() && validateRole() && validatePassword() && validateEmail() && validatePhoneNumber();
     };
@@ -328,7 +338,7 @@ function AddUserModal({ open, handleClose, user }) {
             aria-describedby="modal-modal-description"
         >
             <Box sx={style}>
-                {user ? (<Typography
+                {createOrUpdate === false ? (<Typography
                     id="modal-modal-title"
                     variant="h6"
                     component="h2"
@@ -349,7 +359,7 @@ function AddUserModal({ open, handleClose, user }) {
                         label="שם"
                         value={newUser.Name}
                         onChange={(e) => setNewUser({ ...newUser, Name: e.target.value })}
-                        error={errors.Name != ''}
+                        error={errors.Name !== ''}
                         helperText={errors.Name}
                         fullWidth
                         margin="normal"
@@ -371,7 +381,7 @@ function AddUserModal({ open, handleClose, user }) {
                             </MenuItem>
                         ))}
                     </TextField>
-                    {!user && (<TextField
+                    {createOrUpdate && (<TextField
                         type="password"
                         label="סיסמה"
                         value={newUser.Password}
@@ -402,7 +412,7 @@ function AddUserModal({ open, handleClose, user }) {
                     />
                 </Box>
                 <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center' }}>
-                    {user ? (<Button variant="contained" color="primary" onClick={() => handleUpdateUser()} sx={{ marginRight: 3 }}>
+                    {createOrUpdate === false ? (<Button variant="contained" color="primary" onClick={() => handleUpdateUser()} sx={{ marginRight: 3 }}>
                         עדכן משתמש
                     </Button>) : (<Button variant="contained" color="primary" onClick={() => handleCreateUser()} sx={{ marginRight: 3 }}>
                         הוסף משתמש
@@ -456,7 +466,9 @@ function DeleteUserModal({ open, handleClose, handleConfirm, userName }) {
 const UsersControl = () => {
     const [selectedUserInTable, setSelectedUserInTable] = useState(null);
     const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
+    const [isUpdateUserModalOpen, setIsUpdateUserModalOpen] = useState(false);
     const [isUserDeleteModalOpen, setIsUserDeleteModalOpen] = useState(false);
+    const [createOrUpdate, setCreateOrUpdate] = useState(true); // true = create, false = update
 
     const location = useLocation();
     const role = location.state;
@@ -466,20 +478,18 @@ const UsersControl = () => {
         width: '65%'
     };
 
-    const refreshUsers = () => {
-        window.location.reload();
-    };
-
     const handleSelectUserInTable = (user) => {
         setSelectedUserInTable(user);
     };
 
     const handleOpenAddUserModal = () => {
+        setCreateOrUpdate(true);
         setIsAddUserModalOpen(true);
     };
 
     const handleCloseAddUserModal = () => {
         setIsAddUserModalOpen(false);
+        setIsUpdateUserModalOpen(false);
     };
 
     const handleOpenUpdateUserModal = () => {
@@ -487,7 +497,8 @@ const UsersControl = () => {
             alert('בחר משתמש לעדכון');
         }
         else {
-            handleOpenAddUserModal();
+            setCreateOrUpdate(false);
+            setIsUpdateUserModalOpen(true);
         }
     };
 
@@ -532,9 +543,10 @@ const UsersControl = () => {
             </div>
 
             <AddUserModal
-                open={isAddUserModalOpen}
+                open={isAddUserModalOpen || isUpdateUserModalOpen}
                 handleClose={() => handleCloseAddUserModal()}
                 user={selectedUserInTable}
+                createOrUpdate={createOrUpdate}
             />
 
             <DeleteUserModal
