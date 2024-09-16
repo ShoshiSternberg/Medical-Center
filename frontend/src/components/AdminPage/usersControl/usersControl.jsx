@@ -53,7 +53,7 @@ const UsersTable = forwardRef((props, ref) => {
         };
 
         fetchUsers();
-    }, [users]);
+    }, []);
 
     const handleRowClick = (user) => {
         setSelectedUserId(user.ID);
@@ -186,9 +186,11 @@ function AddUserModal({ open, handleClose, user }) {
         Status: true
     });
 
-    if (user !== null) {
-        setNewUser(user);
-    }
+    useEffect(() => {
+        if (user !== null) {
+            setNewUser(user);
+        }
+    }, [user]);
 
     const [roles, setRoles] = useState([]);
 
@@ -211,7 +213,7 @@ function AddUserModal({ open, handleClose, user }) {
         };
 
         fetchRoles();
-    }, [roles]);
+    }, []);
 
     const validateUserName = () => {
         if (!newUser.Name) {
@@ -275,6 +277,8 @@ function AddUserModal({ open, handleClose, user }) {
     };
 
     const validateInputs = () => {
+        if (user)
+            return validateUserName() && validateRole() && validateEmail() && validatePhoneNumber();
         return validateUserName() && validateRole() && validatePassword() && validateEmail() && validatePhoneNumber();
     };
 
@@ -307,7 +311,8 @@ function AddUserModal({ open, handleClose, user }) {
                 return;
             }
             await updateUser(newUser.ID, newUser);
-            sessionStorage.setItem('name', newUser.Name);
+            if (user.Name === sessionStorage.getItem('name'))
+                sessionStorage.setItem('name', newUser.Name);
             handleClose();
         }
         catch (error) {
@@ -323,14 +328,22 @@ function AddUserModal({ open, handleClose, user }) {
             aria-describedby="modal-modal-description"
         >
             <Box sx={style}>
-                <Typography
+                {user ? (<Typography
                     id="modal-modal-title"
                     variant="h6"
                     component="h2"
                     sx={{ fontFamily: 'Segoe UI, sans-serif', fontWeight: 'bold' }}
                 >
-                    הוספת משתמש
-                </Typography>
+                    עדכון פרטי משתמש
+                </Typography>) :
+                    (<Typography
+                        id="modal-modal-title"
+                        variant="h6"
+                        component="h2"
+                        sx={{ fontFamily: 'Segoe UI, sans-serif', fontWeight: 'bold' }}
+                    >
+                        הוספת משתמש
+                    </Typography>)}
                 <Box sx={{ mt: 2 }}>
                     <TextField
                         label="שם"
@@ -358,7 +371,7 @@ function AddUserModal({ open, handleClose, user }) {
                             </MenuItem>
                         ))}
                     </TextField>
-                    <TextField
+                    {!user && (<TextField
                         type="password"
                         label="סיסמה"
                         value={newUser.Password}
@@ -367,7 +380,7 @@ function AddUserModal({ open, handleClose, user }) {
                         helperText={errors.Password}
                         fullWidth
                         margin="normal"
-                    />
+                    />)}
                     <TextField
                         type="email"
                         label="אימייל"
@@ -389,9 +402,11 @@ function AddUserModal({ open, handleClose, user }) {
                     />
                 </Box>
                 <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center' }}>
-                    <Button variant="contained" color="primary" onClick={() => handleCreateUser()} sx={{ marginRight: 3 }}>
+                    {user ? (<Button variant="contained" color="primary" onClick={() => handleUpdateUser()} sx={{ marginRight: 3 }}>
+                        עדכן משתמש
+                    </Button>) : (<Button variant="contained" color="primary" onClick={() => handleCreateUser()} sx={{ marginRight: 3 }}>
                         הוסף משתמש
-                    </Button>
+                    </Button>)}
                     <Button variant="contained" color="secondary" onClick={() => handleClose()}>
                         ביטול
                     </Button>
@@ -463,10 +478,6 @@ const UsersControl = () => {
         setIsAddUserModalOpen(true);
     };
 
-    const handleOpenUpdateUserModal = () => {
-        setIsAddUserModalOpen(true);
-    };
-
     const handleCloseAddUserModal = () => {
         setIsAddUserModalOpen(false);
         refreshUsers();
@@ -504,8 +515,8 @@ const UsersControl = () => {
                     <div className='moreOperationCont'>
                         <div className='actionOfPatientContainer'>
                             <button className='moreOperation' onClick={() => handleOpenAddUserModal()}>הוספת משתמש</button>
-                            <button className='moreOperation' onClick={() => childRef.current.handleToggleStatus()}>שנה סטטוס פעילות</button>
-                            <button className='moreOperation' onClick={() => handleOpenUpdateUserModal()}>עדכון פרטי משתמש</button>
+                            <button className='moreOperation' onClick={() => childRef.current.handleToggleStatus()}>שנה סטטוס משתמש</button>
+                            <button className='moreOperation' onClick={() => handleOpenAddUserModal()}>עדכון פרטי משתמש</button>
                             <button className='moreOperation' onClick={() => setIsUserDeleteModalOpen(true)}>מחיקת משתמש</button>
                         </div>
                     </div>
