@@ -2,7 +2,7 @@ const User = require('../services/UsersService'); // Assuming you have a User mo
 
 const initManager = async () => {
   const managerEmail = process.env.MANAGER_EMAIL;
-  const managerPassword = process.env.MANAGER_PASSWORD;  
+  const managerPassword = process.env.MANAGER_PASSWORD;
 
   try {
     // Check if the manager already exists
@@ -10,13 +10,13 @@ const initManager = async () => {
 
     if (!manager) {
       // If the manager doesn't exist, create a new one
-    //const hashedPassword = await bcrypt.hash(managerPassword, 10);
+      //const hashedPassword = await bcrypt.hash(managerPassword, 10);
       manager = {
         Email: managerEmail,
         Password: managerPassword,
-        Phone:process.env.MANAGER_PHONE,
-        Name:process.env.MANAGER_NAME,
-        RoleID: 1, 
+        Phone: process.env.MANAGER_PHONE,
+        Name: process.env.MANAGER_NAME,
+        RoleID: 1,
       };
       await User.createUser(manager);
       console.log('Manager user created successfully.');
