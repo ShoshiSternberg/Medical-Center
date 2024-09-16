@@ -55,6 +55,7 @@ export const createUser = async (user) => {
 export const userLogin = async (user) => {
   try {
     console.log(process.env.REACT_APP_SERVICE_URL);
+    console.log(API_URL);
     const response = await axios.post(`${API_URL}login`, user);
     console.log(response)
     return response.data;
