@@ -56,8 +56,13 @@ const UsersTable = forwardRef((props, ref) => {
     }, []);
 
     const handleRowClick = (user) => {
-        setSelectedUserId(user.ID);
-        onSelectUserInTable(user); // Call the prop function with the selected room
+        if (selectedUserId === user.ID) {
+            setSelectedUserId(null);
+            onSelectUserInTable(null);
+        } else {
+            setSelectedUserId(user.ID);
+            onSelectUserInTable(user); 
+        }
     };
 
     const handleRequestSort = (property) => {
