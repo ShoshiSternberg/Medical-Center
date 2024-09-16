@@ -25,14 +25,14 @@ export default function AddRoomModal({ open, handleClose }) {
 
   const handleSubmit = async () => {
     try {
-        await createRoom(roomName ,false);
-        alert(`חדר חדש נוסף: ${roomName}`);
-        handleClose();
-      } catch (error) {
-        console.error('Error adding room:', error);
-        alert('Failed to add room.');
+      await createRoom(roomName, false);
+      alert(`חדר חדש נוסף: ${roomName}`);
+      handleClose();
+    } catch (error) {
+      console.error('Error adding room:', error);
+      alert('Failed to add room.');
     }
-};
+  };
 
   return (
     <Modal
@@ -58,7 +58,7 @@ export default function AddRoomModal({ open, handleClose }) {
             fullWidth
             sx={{ mb: 2 }}
           />
-                  
+
         </Box>
         <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center' }}>
           <Button variant="contained" color="primary" onClick={handleSubmit} sx={{ marginRight: 3 }}>

@@ -95,7 +95,8 @@ exports.userLogin = async (req, res) => {
             });
         }
         else {
-            console.log("problem!!")
+            console.log("problem!!");
+            console.log(error);
             return null;
 
         }

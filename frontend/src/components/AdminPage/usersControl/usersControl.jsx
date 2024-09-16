@@ -1,39 +1,197 @@
-import React, { useState, useEffect } from 'react';
-import {
-    Button,
-    Modal,
-    Box,
-    TextField,
-    MenuItem,
-    Typography,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Paper
-} from '@mui/material';
-import { getUsers, createUser, getUserByEmailAddress, deleteUser } from '../../../clientServices/UserService';
+import React, { useState, useEffect, forwardRef, useRef, useImperativeHandle } from 'react';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import Checkbox from '@mui/material/Checkbox';
+import TableSortLabel from '@mui/material/TableSortLabel';
+import TextField from '@mui/material/TextField';
 import { getRoles } from '../../../clientServices/RoleService';
-import { useLocation } from 'react-router-dom';
-import Sidebar from '../../sidebar/sidebar';
+import { getUsers, createUser, getUserByEmailAddress, deleteUser, updateUser } from '../../../clientServices/UserService';
 import Role from '../../Role/role';
-import './usersControl.css';
-import Swal from 'sweetalert2';
+import { useLocation } from 'react-router-dom';
+import { Box, Button, Modal, Typography, MenuItem } from '@mui/material';
+import Sidebar from '../../sidebar/sidebar';
+import '../../QueuesManagment/QueuesManagmentPage.css';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 
-function MyVerticallyCenteredModal(props) {
-    const [newUser, setNewUser] = useState({
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 500,
+    bgcolor: 'background.paper',
+    border: 'none',
+    boxShadow: 24,
+    p: 4,
+    textAlign: 'center',
+};
+
+
+const UsersTable = forwardRef((props, ref) => {
+    const { onSelectUserInTable } = props;
+    const [users, setUsers] = useState([]);
+    const [selectedUserId, setSelectedUserId] = useState(null);
+    const [order, setOrder] = useState('asc');
+    const [orderBy, setOrderBy] = useState('Name');
+    const [searchQuery, setSearchQuery] = useState('');
+
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                const response = await getUsers();
+                setUsers(response.data);
+            } catch (error) {
+                console.error('Error fetching rooms:', error);
+            }
+        };
+
+        fetchUsers();
+    }, [users]);
+
+    const handleRowClick = (user) => {
+        setSelectedUserId(user.ID);
+        onSelectUserInTable(user); // Call the prop function with the selected room
+    };
+
+    const handleRequestSort = (property) => {
+        const isAsc = orderBy === property && order === 'asc';
+        setOrder(isAsc ? 'desc' : 'asc');
+        setOrderBy(property);
+    };
+
+    const handleSearchChange = (event) => {
+        setSearchQuery(event.target.value);
+    };
+
+    const handleToggleStatus = async () => {
+        const userToToggle = users.find(user => user.ID === selectedUserId);
+        if (userToToggle) {
+            const updatedUser = { ...userToToggle, Status: !userToToggle.Status };
+            console.log(updatedUser)
+            try {
+                await updateUser(updatedUser.ID, updatedUser);
+                setUsers(users.map(user => user.ID === updatedUser.ID ? updatedUser : user));
+            } catch (error) {
+                console.error('Error updating user status:', error);
+            }
+        }
+    };
+
+    useImperativeHandle(ref, () => ({
+        handleToggleStatus,
+    }));
+
+    const filteredUsers = users.filter((user) => {
+        const name = (user.Name || '').toLowerCase();
+
+        return (
+            name.includes(searchQuery.toLowerCase())
+        );
+    });
+
+    const sortedUsers = filteredUsers.sort((a, b) => {
+        if (orderBy === 'Name') {
+            return order === 'asc' ? a.Name.localeCompare(b.Name) : b.Name.localeCompare(a.Name);
+        } else {
+            return order === 'asc' ? a[orderBy].localeCompare(b[orderBy]) : b[orderBy].localeCompare(a[orderBy]);
+        }
+    });
+
+    return (
+        <div>
+            <TextField
+                label="חיפוש"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                value={searchQuery}
+                onChange={handleSearchChange}
+            />
+            <TableContainer component={Paper} sx={{ maxHeight: 400 }}>
+                <Table stickyHeader aria-label="sticky table" sx={{ minWidth: 650 }}>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell align="center">בחירה</TableCell>
+                            <TableCell align="center">
+                                <TableSortLabel
+                                    active={orderBy === 'Name'}
+                                    direction={orderBy === 'Name' ? order : 'asc'}
+                                    onClick={() => handleRequestSort('Name')}
+                                >
+                                    שם משתמש
+                                </TableSortLabel>
+                            </TableCell>
+                            <TableCell align="center">
+                                מייל
+                            </TableCell>
+                            <TableCell align="center">
+                                מספר טלפון
+                            </TableCell>
+                            <TableCell align="center">
+                                סטטוס
+                            </TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {sortedUsers.map((user) => (
+                            <TableRow
+                                key={user.ID}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                onClick={() => handleRowClick(user)}
+                                style={{ cursor: 'pointer' }}
+                                selected={selectedUserId === user.ID}
+                            >
+                                <TableCell padding="checkbox">
+                                    <Checkbox
+                                        color="primary"
+                                        checked={selectedUserId === user.ID}
+                                        onChange={() => handleRowClick(user)}
+                                    />
+                                </TableCell>
+                                <TableCell align="center">
+                                    {user.Name}
+                                </TableCell>
+                                <TableCell align="center">
+                                    {user.Email}
+                                </TableCell>
+                                <TableCell align="center">
+                                    {user.Phone}
+                                </TableCell>
+                                <TableCell align="center">
+                                    {user.Status ? <CheckCircleIcon color="success" /> : <CancelIcon color="error" />}
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </div>
+    );
+});
+
+function AddUserModal({ open, handleClose, user }) {
+    const [newUser, setNewUser] = React.useState({
         Name: '',
         RoleID: '',
         Password: '',
         Email: '',
         Phone: '',
-        Status: true,
+        Status: true
     });
 
+    if (user !== null) {
+        setNewUser(user);
+    }
+
     const [roles, setRoles] = useState([]);
+
     const [errors, setErrors] = useState({
         Name: '',
         RoleID: '',
@@ -42,18 +200,18 @@ function MyVerticallyCenteredModal(props) {
         Phone: ''
     });
 
-    const fetchRoles = async () => {
-        try {
-            const response = await getRoles();
-            setRoles(response.data);
-        } catch (error) {
-            console.error('Error fetching roles:', error);
-        }
-    };
-
     useEffect(() => {
+        const fetchRoles = async () => {
+            try {
+                const response = await getRoles();
+                setRoles(response.data);
+            } catch (error) {
+                console.error('Error fetching roles:', error);
+            }
+        };
+
         fetchRoles();
-    }, []);
+    }, [roles]);
 
     const validateUserName = () => {
         if (!newUser.Name) {
@@ -134,8 +292,7 @@ function MyVerticallyCenteredModal(props) {
             }
             else {
                 await createUser(newUser);
-                props.onClose();
-                props.refreshUsers();
+                handleClose();
             }
 
         } catch (error) {
@@ -143,18 +300,38 @@ function MyVerticallyCenteredModal(props) {
         }
     };
 
+    const handleUpdateUser = async () => {
+        try {
+            if (!validateInputs()) {
+                //alert("נתונים לא תקינים");
+                return;
+            }
+            await updateUser(newUser.ID, newUser);
+            sessionStorage.setItem('name', newUser.Name);
+            handleClose();
+        }
+        catch (error) {
+            console.error('Error updating user:', error);
+        }
+    };
+
     return (
         <Modal
-            open={props.open}
-            onClose={props.onClose}
-            aria-labelledby="contained-modal-title-vcenter"
-            sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', direction: 'rtl' }}
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
         >
-            <Box sx={{ bgcolor: 'background.paper', p: 4, borderRadius: 1, width: 400 }}>
-                <Typography id="contained-modal-title-vcenter" variant="h6" component="h2">
+            <Box sx={style}>
+                <Typography
+                    id="modal-modal-title"
+                    variant="h6"
+                    component="h2"
+                    sx={{ fontFamily: 'Segoe UI, sans-serif', fontWeight: 'bold' }}
+                >
                     הוספת משתמש
                 </Typography>
-                <Box component="form" noValidate autoComplete="off" sx={{ mt: 2 }}>
+                <Box sx={{ mt: 2 }}>
                     <TextField
                         label="שם"
                         value={newUser.Name}
@@ -211,143 +388,143 @@ function MyVerticallyCenteredModal(props) {
                         margin="normal"
                     />
                 </Box>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-                    <Button variant="outlined" color="secondary" onClick={props.onClose}>
-                        סגירה
+                <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center' }}>
+                    <Button variant="contained" color="primary" onClick={() => handleCreateUser()} sx={{ marginRight: 3 }}>
+                        הוסף משתמש
                     </Button>
-                    <Button variant="contained" color="primary" onClick={handleCreateUser}>
+                    <Button variant="contained" color="secondary" onClick={() => handleClose()}>
+                        ביטול
+                    </Button>
+                </Box>
+            </Box>
+        </Modal >
+    );
+}
+
+function DeleteUserModal({ open, handleClose, handleConfirm, userName }) {
+    return (
+        <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+        >
+            <Box sx={style}>
+                <Typography
+                    id="modal-modal-title"
+                    variant="h6"
+                    component="h2"
+                    sx={{ fontFamily: 'Segoe UI, sans-serif', fontWeight: 'bold' }} // Change font family and weight
+                >
+                    מחיקת משתמש
+                </Typography>
+                <Typography
+                    id="modal-modal-description"
+                    sx={{ mt: 2, fontFamily: 'Segoe UI, sans-serif', fontWeight: 'normal' }} // Change font family and weight
+                    icon='warning'
+                >
+                    ?{userName} האם אתה בטוח שברצונך למחוק את המשתמש
+                </Typography>
+                <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center' }}>
+                    <button className='cancalOrSubmitBtn' onClick={() => handleConfirm()} sx={{ marginRight: 3 }}>
                         אישור
-                    </Button>
+                    </button>
+                    <button className='cancalOrSubmitBtn' onClick={() => handleClose()}>
+                        ביטול
+                    </button>
                 </Box>
             </Box>
         </Modal>
     );
 }
 
-const UsersTable = () => {
-    const [users, setUsers] = useState([]);
-
-    const fetchUsers = async () => {
-        try {
-            const response = await getUsers();
-            setUsers(response.data);
-        } catch (error) {
-            console.error('Error fetching users:', error);
-        }
-    };
-
-    useEffect(() => {
-        fetchUsers();
-    }, []);
-
-    const [selectedUser, setSelectedUser] = useState(null);
-    const [updateUserModalOpen, setUpdateUserModalOpen] = useState(false);
-
-    const deleteUserById = async (userId) => {
-        await deleteUser(userId); // Call delete user API from UserService
-        const updatedUsers = users.filter((user) => user.ID !== userId);
-        setUsers(updatedUsers);
-    }
-
-    const handleDeleteUser = async (userId) => {
-        Swal.fire({
-            title: 'האם אתה בטוח?',
-            text: 'פעולה זו תמחק את המשתמש באופן סופי',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'אישור',
-            cancelButtonText: 'ביטול'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // אם המשתמש אישר, בצע את פעולת המחיקה
-                try {
-                    deleteUserById(userId);
-                } catch (error) {
-                    console.error("Error deleting user:", error);
-
-                }
-            }
-        });
-    };
-
-    const handleUpdateUserOpen = (user) => {
-        setSelectedUser(user);
-        setUpdateUserModalOpen(true);
-    };
-
-    return (
-        <Box sx={{ display: 'flex', justifyContent: 'center', width: '50%', direction: 'rtl' }}>
-            <TableContainer component={Paper} sx={{ width: '100%' }}>
-                <Table >
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>#</TableCell>
-                            <TableCell>שם משתמש</TableCell>
-                            <TableCell>מייל</TableCell>
-                            <TableCell>מספר טלפון</TableCell>
-                            <TableCell></TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {users.map((user, index) => (
-                            <TableRow key={user.ID}>
-                                <TableCell>{index + 1}</TableCell>
-                                <TableCell>{user.Name}</TableCell>
-                                <TableCell>{user.Email}</TableCell>
-                                <TableCell>{user.Phone}</TableCell>
-                                <TableCell>
-                                    <Button variant="contained" color="primary" size="small" onClick={() => handleUpdateUserOpen(user)}>
-                                        עדכון
-                                    </Button>
-                                    <Button variant="contained" color="error" size="small" onClick={() => handleDeleteUser(user.ID)}>
-                                        מחיקה
-                                    </Button>
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        </Box>
-
-    );
-};
-
 const UsersControl = () => {
-    const [modalOpen, setModalOpen] = useState(false);
+    const [selectedUserInTable, setSelectedUserInTable] = useState(null);
+    const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
+    const [isUserDeleteModalOpen, setIsUserDeleteModalOpen] = useState(false);
+
     const location = useLocation();
     const role = location.state;
+    const childRef = useRef();
+
+    const divStyle = {
+        width: '65%'
+    };
 
     const refreshUsers = () => {
         window.location.reload();
     };
 
+    const handleSelectUserInTable = (user) => {
+        setSelectedUserInTable(user);
+    };
+
+    const handleOpenAddUserModal = () => {
+        setIsAddUserModalOpen(true);
+    };
+
+    const handleOpenUpdateUserModal = () => {
+        setIsAddUserModalOpen(true);
+    };
+
+    const handleCloseAddUserModal = () => {
+        setIsAddUserModalOpen(false);
+        refreshUsers();
+    };
+
+    const handleCloseUserDeleteModal = () => {
+        setIsUserDeleteModalOpen(false);
+        refreshUsers();
+    };
+
+    const handleConfirmUserDeleteModal = async () => {
+        try {
+            console.log(selectedUserInTable.ID)
+            await deleteUser(selectedUserInTable.ID);
+
+            alert('המשתמש נמחק בהצלחה');
+            setSelectedUserInTable(null);
+            handleCloseUserDeleteModal();
+        } catch (error) {
+            console.error('Error deleting user:', error);
+            // alert('כרגע החדר בשימוש, אין אפשרות למחוק אותו');
+        }
+    };
+
+
     return (
         <>
-            <div className='usersPageContainer'>
+            <div className='queueManagmentContainer'>
 
                 <Sidebar role={role} />
-                <div className='usersPageCont'>
-                    <div>
-                        ניהול משתמשים
+                <div className='roomsDetailsTableContainer' style={divStyle}>
+                    <div className='managmentTitle'>משתמשים</div>
+
+                    <UsersTable ref={childRef} onSelectUserInTable={handleSelectUserInTable} />
+                    <div className='moreOperationCont'>
+                        <div className='actionOfPatientContainer'>
+                            <button className='moreOperation' onClick={() => handleOpenAddUserModal()}>הוספת משתמש</button>
+                            <button className='moreOperation' onClick={() => childRef.current.handleToggleStatus()}>שנה סטטוס פעילות</button>
+                            <button className='moreOperation' onClick={() => handleOpenUpdateUserModal()}>עדכון פרטי משתמש</button>
+                            <button className='moreOperation' onClick={() => setIsUserDeleteModalOpen(true)}>מחיקת משתמש</button>
+                        </div>
                     </div>
-                    <button onClick={() => setModalOpen(true)}>
-                        הוספת משתמש חדש
-                    </button>
-                    <MyVerticallyCenteredModal
-                        open={modalOpen}
-                        onClose={() => setModalOpen(false)}
-                        refreshUsers={refreshUsers}
-                    />
-
-                    <UsersTable />
-
-
                 </div>
                 <Role />
             </div>
+
+            <AddUserModal
+                open={isAddUserModalOpen}
+                handleClose={() => handleCloseAddUserModal()}
+                user={selectedUserInTable}
+            />
+
+            <DeleteUserModal
+                open={isUserDeleteModalOpen}
+                handleClose={() => handleCloseUserDeleteModal()}
+                handleConfirm={() => handleConfirmUserDeleteModal()}
+                userName={selectedUserInTable ? `${selectedUserInTable.Name}` : ''}
+            />
         </>
     );
 };
