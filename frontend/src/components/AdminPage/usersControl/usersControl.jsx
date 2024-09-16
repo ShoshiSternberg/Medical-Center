@@ -480,12 +480,19 @@ const UsersControl = () => {
 
     const handleCloseAddUserModal = () => {
         setIsAddUserModalOpen(false);
-        refreshUsers();
+    };
+
+    const handleOpenUpdateUserModal = () => {
+        if (selectedUserInTable === null) {
+            alert('בחר משתמש לעדכון');
+        }
+        else {
+            handleOpenAddUserModal();
+        }
     };
 
     const handleCloseUserDeleteModal = () => {
         setIsUserDeleteModalOpen(false);
-        refreshUsers();
     };
 
     const handleConfirmUserDeleteModal = async () => {
@@ -516,7 +523,7 @@ const UsersControl = () => {
                         <div className='actionOfPatientContainer'>
                             <button className='moreOperation' onClick={() => handleOpenAddUserModal()}>הוספת משתמש</button>
                             <button className='moreOperation' onClick={() => childRef.current.handleToggleStatus()}>שנה סטטוס משתמש</button>
-                            <button className='moreOperation' onClick={() => handleOpenAddUserModal()}>עדכון פרטי משתמש</button>
+                            <button className='moreOperation' onClick={() => handleOpenUpdateUserModal()}>עדכון פרטי משתמש</button>
                             <button className='moreOperation' onClick={() => setIsUserDeleteModalOpen(true)}>מחיקת משתמש</button>
                         </div>
                     </div>
