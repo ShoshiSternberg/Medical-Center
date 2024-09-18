@@ -12,6 +12,14 @@ import { getAllRooms, getRoomById } from '../../clientServices/RoomService.js';
 import EmergencyDoctorAlertModal from '../QueuesManagment/modals/EmergencyDoctorAlert.jsx';
 import DeletePatientModal from '../QueuesManagment/modals/DeletePatient.jsx';
 import Role from '../Role/role.jsx';
+import MorePatientOptions from './morePatientOptions.jsx';
+import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
+import AssistantIcon from '@mui/icons-material/Assistant';
+import TroubleshootIcon from '@mui/icons-material/Troubleshoot';
+import TurnRightIcon from '@mui/icons-material/TurnRight';
+import DeviceThermostatIcon from '@mui/icons-material/DeviceThermostat';
+import DoneIcon from '@mui/icons-material/Done';
+import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
 const DoctorPage = () => {
 
 
@@ -40,18 +48,28 @@ const DoctorPage = () => {
 
     const getIconForRoom = (roomId) => {
         switch (roomId) {
-            case 5:
-                return <VaccinesIcon className='queueIcon' />;
-            case 4:
-                return <MonitorHeartIcon className='queueIcon' />;
-            case 3:
-                return <ZoomOutMapIcon className='queueIcon' />;
-            case 2:
-                return <VaccinesIcon className='queueIcon' />;
             case 1:
+                return <AssistantIcon className='queueIcon' />;
+
+            case 2:
+                return <ZoomOutMapIcon className='queueIcon' />;
+
+            case 3:
+                return <MonitorHeartIcon className='queueIcon' />;
+
+            case 4:
                 return <VaccinesIcon className='queueIcon' />;
+
+            case 5:
+                return <TroubleshootIcon className='queueIcon' />;
+            case 6:
+                return <TurnRightIcon className='queueIcon' />;
+            case 7:
+                return <MeetingRoomIcon className='queueIcon' />;
+            case 8:
+                return <DeviceThermostatIcon className='queueIcon' />;
             default:
-                return null;
+                return <DeviceThermostatIcon className='queueIcon' />;
         }
     };
 
@@ -67,9 +85,9 @@ const DoctorPage = () => {
                 setRoomData(roomData);
                 console.log(roomData);
 
-                const mappedRoomButtons = fetchedRooms.map(room => ({
-                    roomId: room.ID,
-                    icon: getIconForRoom(room.ID),
+                const mappedRoomButtons = fetchedRooms.map((room, index) => ({
+                    roomId: room.ID, // Using index as roomId
+                    icon: getIconForRoom(index),
                     label: `העבר ל${room.Name}`
                 }));
 
@@ -126,83 +144,94 @@ const DoctorPage = () => {
 
 
     const anotherButtons = [
-        { roomId: 1, icon: <CheckCircleIcon />, label: 'סיום טיפול', className: 'EndOfTreatment anotherButtons', onclick: handleFinishTreatment },
-        { roomId: 2, label: 'התראת חירום לרופא ', className: 'emergencyAlert anotherButtons', onclick: handleOpenEmergencyModal }
+        { roomId: 1, icon: <DoneIcon className='svgIcon' />, label: 'סיום טיפול', className: 'EndOfTreatment anotherButtons', onclick: handleFinishTreatment },
+        { roomId: 2, icon: <PriorityHighIcon className='svgIcon' />, label: 'התראת חירום לרופא ', className: 'emergencyAlert anotherButtons', onclick: handleOpenEmergencyModal }
     ];
 
     return (
         <div className='doctorPageContainer'>
-            {role=== 2 && (<SidebarMenu role={role} />)}
-            <div className='queuesCont'>
-                <h2>חדר {roomData.Name}</h2>
-                <div className='queueDetails'>
-                    <div className='currentPatient'>
-                        {currentPatient ? (
-                            <>
-                                <div className='patientNumber'>{currentPatient.UniqueNumber}</div>
-                                <div className='patientName'>{currentPatient.FirstName} {currentPatient.LastName}</div>
-                            </>
-                        ) : (
-                            <div className='noPatientMessage'>אין מטופל בחדר כרגע</div>
-                        )}
+            {(role === 2 || role == 1) && (<SidebarMenu role={role} />)}
+            <div className='receptionRoomCont'>
+                {(role === 2 || role == 1) && (roomData.Name === "קבלה") && (<MorePatientOptions />)}
+
+                <div className='queuesCont'>
+                    <h2>חדר {roomData.Name}</h2>
+                    <div className='queueDetails'>
+                        <div className='currentPatient'>
+                            {currentPatient ? (
+                                <>
+                                    <div className='patientNumber'>{currentPatient.UniqueNumber}</div>
+                                    <div className='patientName'>{currentPatient.tz}</div>
+                                </>
+                            ) : (
+                                <div className='noPatientMessage'>אין מטופל בחדר כרגע</div>
+                            )}
+                        </div>
+                        <div className='nextPatient'>
+                            {nextPatient ? (
+                                <>
+                                    <span className='queueDetTitle'>מטופל הבא </span>
+                                    <div className='nextPatientNumber'>{nextPatient.UniqueNumber} : {nextPatient.FirstName} {nextPatient.LastName}</div>
+                                </>
+                            ) : (
+                                <div className='noNextPatientMessage'>אין ממתינים</div>
+                            )}
+                        </div>
                     </div>
-                    <div className='nextPatient'>
-                        {nextPatient ? (
-                            <>
-                                <span className='queueDetTitle'>מטופל הבא </span>
-                                <div className='nextPatientNumber'>{nextPatient.UniqueNumber} : {nextPatient.FirstName} {nextPatient.LastName}</div>
-                            </>
-                        ) : (
-                            <div className='noNextPatientMessage'>אין ממתינים</div>
-                        )}
+
+
+                    <div className='allBtnsCont'>
+                        <div className='anotherBtnsCont'>
+                            {anotherButtons.map((button1, index)=> (
+                                button1.Id !== parseInt(id) && (
+                                    <button key={index} className={button1.className} onClick={button1.onclick}>
+                                        {button1.icon}
+                                        {/* <span>{button1.label}</span> */}
+                                    </button>
+                                )
+                            ))}
+                        </div>
+
+                        <div className='queuesList'>
+                            {roomButtons.map((button, index) => (
+                                button.roomId !== parseInt(id) && (
+                                    <button key={index} onClick={() => moveRoom(button.roomId)} className='moveQueue'>
+                                        <div className='moveCont'>
+                                            {button.icon}
+                                            <div style={{ marginRight: "5px" }}>{button.label}</div>
+                                        </div>
+                                    </button>
+                                )
+                            ))}
+                        </div>
+
+
                     </div>
+
+
+
                 </div>
 
-                <div className='allQueues'>
-                    <div className='queuesList'>
-                        {roomButtons.map(button => (
-                            button.roomId !== parseInt(id) && (
-                                <button key={button.roomId} onClick={() => moveRoom(button.roomId)} className='moveQueue'>
-                                    {button.icon}
-                                    <span>{button.label}</span>
-                                </button>
-                            )
-                        ))}
-                    </div>
-                </div>
-                <div className='allQueues'>
-                    <div className='queuesList'>
-                        {anotherButtons.map(button => (
-                            button.Id !== parseInt(id) && (
-                                <button key={button.Id} className={button.className} onClick={button.onclick}>
-                                    {getIconForRoom(button.ID)}
-                                    <span>{button.label}</span>
-                                </button>
-                            )
-                        ))}
-                    </div>
-                </div>
-            </div>
+                <DeletePatientModal
+                    open={isDeleteModalOpen}
+                    handleClose={handleCloseDeleteModal}
+                    handleConfirm={handleConfirmDeleteModal}
+                    patientName={currentPatient ? `${currentPatient.UniqueNumber}` : ''}
+                />
 
-            <DeletePatientModal
-                open={isDeleteModalOpen}
-                handleClose={handleCloseDeleteModal}
-                handleConfirm={handleConfirmDeleteModal}
-                patientName={currentPatient ? `${currentPatient.FirstName} ${currentPatient.LastName}` : ''}
-            />
-
-            <EmergencyDoctorAlertModal
-                open={isEmergencyModalOpen}
-                handleClose={handleCloseEmergencyModal}
-                handleConfirm={handleConfirmEmergencyModal}
-                patientName={currentPatient ? `${currentPatient.FirstName} ${currentPatient.LastName}` : ''}
-                roomName={id ? roomData.Name : ''}
-            />
-            {alertComponent} {/* This renders the custom alert */}
-            <div className='roleContainer'>
-                <Role />
-            </div>
-        </div>
+                <EmergencyDoctorAlertModal
+                    open={isEmergencyModalOpen}
+                    handleClose={handleCloseEmergencyModal}
+                    handleConfirm={handleConfirmEmergencyModal}
+                    patientName={currentPatient ? `${currentPatient.UniqueNumber}` : ''}
+                    roomName={id ? roomData.Name : ''}
+                />
+                {alertComponent} {/* This renders the custom alert */}
+                <div className='roleContainer'>
+                    <Role />
+                </div>
+            </div >
+        </div >
     );
 };
 

@@ -114,7 +114,7 @@ exports.createPatient = async (firstName, lastName, HMOid, phone,tz) => {
             LastName: lastName,
             Phone: phone,
             HMOid: HMOid,
-            tz:tz,
+            Tz:tz,
             CheckIn: new Date(),
             CheckOut: new Date(),
             Status: true

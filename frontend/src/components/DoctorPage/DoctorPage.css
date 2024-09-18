@@ -1,26 +1,30 @@
-.doctorPageContainer{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.doctorPageContainer {
+
     height: 100vh;
-    flex-direction: column;
+    padding-top: 100px;
+    padding-right: 5%;
+
+    background-color: #f1f7ff;
 }
 
 
 .moveQueue {
     border-radius: 10px;
     width: 150px;
-    height: 100px;
+    height: 50px;
     margin: 10px;
-    padding: 5px;
-    display: flex;
-    align-items: center;
-    padding: 5px;
+
     font-weight: 600;
     font-size: 11pt;
-    flex-direction: column;
+    background-color: #e8f1ff;
+
+}
+
+.moveCont {
+    display: flex;
+    align-items: center;
     justify-content: center;
-    background-color: #e8ebff;
+    flex-direction: row-reverse;
 }
 
 .moveQueue:hover {
@@ -30,64 +34,74 @@
 
 .queuesList {
     display: flex;
-    flex-direction: row;
     align-items: center;
+    flex-wrap: wrap;
     justify-content: center;
+    width: 80%;
+
 }
 
 .queuesCont {
-    display: flex;
+
     align-items: center;
-    flex-direction: column;
     background-color: rgb(255, 255, 255);
     border-radius: 20px;
-    padding: 10px;
     margin: 20px;
-    width: 72%;
-    height: 600px;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
+    width: 60%;
+    padding: 20px;
+
 }
 
+/* 
 .allQueues {
+    height: 100%;
+
+} */
+
+.allBtnsCont {
     display: flex;
+    align-items: center;
     justify-content: center;
+    flex-direction: column-reverse;
 }
 
 .queueDetails {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 30px;  
+    margin-bottom: 30px;
     justify-content: center;
+    width: 100%;
 }
 
 
 .currentPatient {
-    background-image: linear-gradient(to right, #36D1DC 0%, #142ad0  51%, #36D1DC  100%);
+    background-image: linear-gradient(to right, #36D1DC 0%, #142ad0 51%, #36D1DC 100%);
     text-align: center;
     text-transform: uppercase;
     transition: 0.5s;
     background-size: 200% auto;
     box-shadow: 0 0 20px #eee;
-    border-radius: 10px;
     color: white;
     font-weight: 600;
     font-size: 20pt;
     padding: 30px;
-    width: 500px;
-    margin: 10px;
-
+    width: 50%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 
 }
 
 .nextPatient {
     font-size: 10pt;
-    border: 1px solid #1528b4;
-    background-color: white;
+    background-color: #e4f3ff;
     padding: 10px 30px 10px 30px;
-    width: 500px;
-    border-radius: 10px;
-    margin: 10px;
+    width: 50%;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 
 }
 
@@ -108,34 +122,118 @@
 
 }
 
-button{
-    border:none;
+button {
+    border: none;
     outline: none;
 }
 
 
-.anotherButtons {
-    border-radius: 10px;
-    width: 400px;
-    height: 60px;
-    margin: 10px;
-    padding: 5px;
+/* .anotherButtons {
     display: flex;
-    align-items: center;
-    padding: 5px;
-    font-weight: 600;
-    font-size: 11pt;
     flex-direction: column;
-    justify-content: center;  
-    cursor: pointer;  
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    width: 170px;
+    border-radius: 100px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    font-weight: 600;
+    margin-top: 10px;
+} */
+
+
+.anotherBtnsCont {
+    display: flex;
+
 }
 
-.emergencyAlert{
-    background-color: rgb(250, 67, 67);
+.emergencyAlert {
+    /* background-color: rgb(250, 67, 67);
+    color: white; */
 }
-.EndOfTreatment{
-    border: red solid 1px;
+
+.EndOfTreatment {
+    /* border: red solid 1px;
     background-color: white;
+    color: red; */
+}
+
+.receptionRoomCont {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+}
+
+
+
+
+.anotherButtons {
+    box-shadow: -3px 2px 0px 0px #e85656;
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    background-color: rgb(255 245 245);
+    border: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition-duration: 0.3s;
+    overflow: hidden;
+    position: relative;
+    margin: 10px;
     color: red;
 }
 
+.svgIcon {
+    width: 12px;
+    transition-duration: 0.3s;
+}
+
+.svgIcon path {
+    fill: rgb(255, 16, 16);
+}
+
+.anotherButtons:hover {
+    width: 140px;
+    border-radius: 12px;
+    transition-duration: 0.3s;
+    background-color: rgb(255, 0, 0);
+    align-items: center;
+    color: white;
+    box-shadow: none;
+
+}
+
+.anotherButtons:hover .svgIcon {
+    /* width: 20px; */
+    transition-duration: 0.3s;
+    transform: translateY(-200%);
+}
+
+.EndOfTreatment::before {
+    position: absolute;
+    bottom: -20px;
+    content: "סיום טיפול";
+    color: white;
+    font-size: 0px;
+}
+
+.emergencyAlert::before {
+    position: absolute;
+    bottom: -20px;
+    content: "התראת חירום לרופא";
+    color: white;
+    font-size: 0px;
+}
+
+.anotherButtons:hover::before {
+    font-size: 13px;
+    opacity: 1;
+    bottom: unset;
+    transition-duration: 0.3s;
+}

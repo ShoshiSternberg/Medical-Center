@@ -1,0 +1,44 @@
+.ReceptionOperationsCont{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.action-reception-btn{
+    margin: 10px;
+    background-image: linear-gradient(to right, #4ca0f9 0%, #3762f0 51%, #368cdc 100%);
+    background-size: 200% auto;
+    border-radius: 10px;
+    padding: 7px;
+    width: 130px;
+    font-size: 10pt;
+    text-align: center;
+    font-weight: 500;
+    color: #ffffff;
+    border: none;
+}
+
+.btn-cont-reception{
+    display: flex;
+    direction: rtl;
+}
+
+.endTreatBtn{
+    width: 50%;
+    background-color: #ffffff;
+    border-radius: 100px;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 20px 8px 20px;
+    border: 1px dashed red;
+    margin: 15px;
+}
+
+.endTreatBtn:hover{
+    background-color: #ffebeb;
+ 
+}

@@ -1,0 +1,103 @@
+/* Ensure that the table wrapper has a fixed height and overflow properties */
+.table-wrapper {
+    max-height: 200px; /* Set this height based on your requirement */
+    overflow-y: auto;
+    overflow-x: hidden;
+    border: 1px solid #ddd; /* Optional: to add a border around the table */
+    margin-bottom: 20px; /* Optional: spacing below the table */
+}
+
+.small-table {
+    width: 400px;
+    border-collapse: collapse;
+}
+
+.small-table th, .small-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.small-table th {
+    background-color: #f4f4f4;
+}
+
+.selected {
+    background-color: #e0e0e0; /* Highlight the selected row */
+}
+
+.search-input {
+    width: 75%;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 100px;
+    padding: 15px;
+    direction: rtl;
+}
+
+.operationCont {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.actionOfPatientContainer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.moveToRoomBtn {
+    margin-left: 10px;
+    padding: 10px 20px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.moveToRoomBtn:disabled {
+    background-color: #6c757d;
+}
+
+.finishTreatment {
+    display: flex;
+    align-items: center;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.finishTreatment:disabled {
+    background-color: #6c757d;
+}
+
+.finishTreatment div {
+    margin-left: 8px;
+}
+.MorePatientOptionsCont{
+    width:50%;
+}
+.MorePatientOptionsContainer{
+    background-color: rgb(255, 255, 255);
+    border-radius: 20px;
+    padding: 40px;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.selectedPatientCont{
+    display: flex;
+    border-radius: 100px;
+    background-color: #ebf4ff;
+    flex-direction: column;
+    padding: 10px;
+    width: 80%;
+    margin: 10px;
+}

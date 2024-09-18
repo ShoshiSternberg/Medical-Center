@@ -173,7 +173,7 @@ const QueueManagmentPage = () => {
                     <div className='managmentTitle'>מטופלים</div>
                     <div className='patientsDetailsTableCont'>
                         <div className='patientDetailsContainer'>
-                            <div className='patientDetail'>
+                            {/* <div className='patientDetail'>
                                 <div className='detailTitleContainer'>
                                     <PersonIcon className='detailTitle' />
                                     <div className='detailTitle'>שם מטופל</div>
@@ -181,7 +181,7 @@ const QueueManagmentPage = () => {
                                 <div className='detailProperty'>
                                     {selectedPatient ? `${selectedPatient.FirstName} ${selectedPatient.LastName}` : '---'}
                                 </div>
-                            </div>
+                            </div> */}
 
                             <div className='patientDetail'>
                                 <div className='detailTitleContainer'>

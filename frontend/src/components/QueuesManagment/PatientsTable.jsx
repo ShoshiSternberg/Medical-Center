@@ -132,7 +132,7 @@ export default function PatientsTable({ patients, setPatients, onSelectPatient }
                     <TableHead>
                         <TableRow>
                             <TableCell align="center">בחירה</TableCell>
-                            <TableCell align="center">
+                            {/* <TableCell align="center">
                                 <TableSortLabel
                                     active={orderBy === 'FirstName'}
                                     direction={orderBy === 'FirstName' ? order : 'asc'}
@@ -140,7 +140,7 @@ export default function PatientsTable({ patients, setPatients, onSelectPatient }
                                 >
                                     שם מטופל
                                 </TableSortLabel>
-                            </TableCell>
+                            </TableCell> */}
                             <TableCell align="center">
                                 <TableSortLabel
                                     active={orderBy === 'UniqueNumber'}
@@ -205,9 +205,9 @@ export default function PatientsTable({ patients, setPatients, onSelectPatient }
                                         onChange={() => handleRowClick(patient)}
                                     />
                                 </TableCell>
-                                <TableCell align="center">
+                                {/* <TableCell align="center">
                                     {patient.FirstName} {patient.LastName}
-                                </TableCell>
+                                </TableCell> */}
                                 <TableCell align="center">{patient.UniqueNumber}</TableCell>
                                 <TableCell align="center">
                                     {patient.queues.length > 0 ? patient.queues[0].room.Name : 'N/A'}
