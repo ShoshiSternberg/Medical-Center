@@ -35,8 +35,13 @@ const RoomsTable = forwardRef((props, ref) => {
     }, []);
 
     const handleRowClick = (room) => {
-        setSelectedRoomId(room.ID);
-        onSelectRoomInTable(room); // Call the prop function with the selected room
+        if (selectedRoomId === room.ID) {
+            setSelectedRoomId(null);
+            onSelectRoomInTable(null);
+        } else {
+            setSelectedRoomId(room.ID);
+            onSelectRoomInTable(room); // Call the prop function with the selected room
+        }
     };
 
     const handleRequestSort = (property) => {

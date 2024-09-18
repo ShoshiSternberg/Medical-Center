@@ -37,6 +37,7 @@ const style = {
 const UsersTable = forwardRef((props, ref) => {
     const { onSelectUserInTable } = props;
     const [users, setUsers] = useState([]);
+    const [roles, setRoles] = useState([]);
     const [selectedUserId, setSelectedUserId] = useState(null);
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('Name');
@@ -48,11 +49,21 @@ const UsersTable = forwardRef((props, ref) => {
                 const response = await getUsers();
                 setUsers(response.data);
             } catch (error) {
-                console.error('Error fetching rooms:', error);
+                console.error('Error fetching users:', error);
+            }
+        };
+
+        const fetchRoles = async () => {
+            try {
+                const response = await getRoles();
+                setRoles(response.data);
+            } catch (error) {
+                console.error('Error fetching roles:', error);
             }
         };
 
         fetchUsers();
+        fetchRoles();
     }, []);
 
     const handleRowClick = (user) => {
@@ -61,7 +72,7 @@ const UsersTable = forwardRef((props, ref) => {
             onSelectUserInTable(null);
         } else {
             setSelectedUserId(user.ID);
-            onSelectUserInTable(user); 
+            onSelectUserInTable(user);
         }
     };
 
@@ -109,6 +120,11 @@ const UsersTable = forwardRef((props, ref) => {
         }
     });
 
+    const getRoleNameById = (roleId) => {
+        const role = roles.find(role => role.ID === roleId);
+        return role ? role.Role : 'תפקיד לא קיים';
+    };
+
     return (
         <div>
             <TextField
@@ -140,6 +156,9 @@ const UsersTable = forwardRef((props, ref) => {
                                 מספר טלפון
                             </TableCell>
                             <TableCell align="center">
+                                תפקיד
+                            </TableCell>
+                            <TableCell align="center">
                                 סטטוס
                             </TableCell>
                         </TableRow>
@@ -168,6 +187,9 @@ const UsersTable = forwardRef((props, ref) => {
                                 </TableCell>
                                 <TableCell align="center">
                                     {user.Phone}
+                                </TableCell>
+                                <TableCell align="center">
+                                    {getRoleNameById(user.RoleID)}
                                 </TableCell>
                                 <TableCell align="center">
                                     {user.Status ? <CheckCircleIcon color="success" /> : <CancelIcon color="error" />}
